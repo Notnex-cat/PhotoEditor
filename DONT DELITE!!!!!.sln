@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DONT DELITE!!!!!", "DONT DELITE!!!!!\DONT DELITE!!!!!.csproj", "{6E4192D5-D5FB-46D0-8428-34309DE39CEF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageEditor", "DONT DELITE!!!!!\ImageEditor.csproj", "{6E4192D5-D5FB-46D0-8428-34309DE39CEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

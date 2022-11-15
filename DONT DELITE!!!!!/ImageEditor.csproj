@@ -239,6 +239,18 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="icons\add-image.png" />
+    <Resource Include="icons\crop %281%29.png" />
+    <Resource Include="icons\crop.png" />
+    <Resource Include="icons\diskette.png" />
+    <Resource Include="icons\file.png" />
+    <Resource Include="icons\filter.png" />
+    <Resource Include="icons\flip %281%29.png" />
+    <Resource Include="icons\rotate.png" />
+    <Resource Include="icons\slow-motion.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Text.Json.6.0.6\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.6\build\System.Text.Json.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
