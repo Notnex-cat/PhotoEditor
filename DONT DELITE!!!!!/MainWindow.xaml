@@ -1,0 +1,27 @@
+﻿<Window x:Class="DONT_DELITE_____.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="769" Width="1024">
+    <Grid x:Name="LayoutRoot">
+        <Image Margin="14,98,14,15" x:Name="imgPhoto"/>
+        <Button x:Name="Save" Content="Сохранить" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" Width="107" Click="Save_Click" />
+        <Button x:Name="Otraz" Content="Отразить по вертикали" HorizontalAlignment="Left" Margin="272,21,0,0" VerticalAlignment="Top" Width="186" Click="Otraz_Click" RenderTransformOrigin="0.784,0.574" />
+        <Button x:Name="Invert" Content="Инвертирование" HorizontalAlignment="Left" Margin="122,21,0,0" VerticalAlignment="Top" Click="Invert_Click" Width="145" />
+        <Button x:Name="Rotate" Content="Повернуть" HorizontalAlignment="Left" Margin="668,20,0,0" VerticalAlignment="Top" Click="Rotate_Click"/>
+        <Button x:Name="Otraz1" Content="Отразить по горизонтали" HorizontalAlignment="Left" Margin="463,21,0,0" VerticalAlignment="Top" Click="Otraz1_Click"/>
+        <Button x:Name="crop" Content="Crop" HorizontalAlignment="Left" Margin="776,21,0,0" VerticalAlignment="Top" Click="crop_Click"/>
+        <InkCanvas Background="Transparent" Margin="14,98,14,15" />
+        <Button x:Name="Gray" Content="Серый" HorizontalAlignment="Left" Margin="844,21,0,0" VerticalAlignment="Top" Width="85" Click="Gray_Click"/>
+        <ComboBox Name="RGB" Text="RGB Choice" Height="30" VerticalAlignment="Top" Margin="938,20,0,0">
+            <Slider x:Name="RedSlider" Margin="0,10,0,0" Foreground="Red" Maximum="100" Minimum="-100" ValueChanged="RedSlider_ValueChanged_1" HorizontalAlignment="Left" Width="130"/>
+            <Slider x:Name="GreenSlider" Margin="0,10,0,0" Foreground="Green" Maximum="100" Minimum="-100" ValueChanged="GreenSlider_ValueChanged_1" HorizontalAlignment="Left" Width="130" Height="30"/>
+            <Slider x:Name="BlueSlider" Margin="0,10,0,0" Foreground="Blue" Maximum="100" Minimum="-100" ValueChanged="BlueSlider_ValueChanged_1" HorizontalAlignment="Left" Width="130" Height="30"/>
+        </ComboBox>
+        <Button x:Name="reload" Content="reload" HorizontalAlignment="Left" Margin="542,63,0,0" VerticalAlignment="Top"  Click="reload_Click"/>
+        <Button x:Name="redo" Content="redo" HorizontalAlignment="Left" Margin="644,63,0,0" VerticalAlignment="Top" Click="redo_Click"/>
+        <Button x:Name="undo" Content="undo" HorizontalAlignment="Left" Margin="720,63,0,0" VerticalAlignment="Top" Click="undo_Click"/>
+    </Grid>
+</Window>
