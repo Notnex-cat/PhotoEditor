@@ -74,6 +74,7 @@
                 <TabItem Name="tabFilter" Header="Фильтр" Foreground="White">
                     <DockPanel Margin="0,0,0,284">
                         <Slider x:Name="TransSlider" Margin="0,10,0,0" Foreground="Black" Minimum="-100" Maximum="0" ValueChanged="TransSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
+                        <Slider x:Name="LightSlider" Margin="0,10,0,0" Foreground="Wheat" Minimum="-100" Maximum="100" ValueChanged="LightSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
 
                     </DockPanel>
                 </TabItem>

@@ -157,6 +157,7 @@ namespace DONT_DELITE_____.Back
             float changegreen = (float)mainWindowCls.GreenSlider.Value * 0.02f;
             float changeblue = (float)mainWindowCls.BlueSlider.Value * 0.02f;
             float changetrans = (float)mainWindowCls.TransSlider.Value * 0.02f;
+            float changelight = (float)mainWindowCls.LightSlider.Value * 0.005f;
             Bitmap aBitmap = new Bitmap(original.Width, original.Height);
             Graphics g = Graphics.FromImage(aBitmap);
 
@@ -166,7 +167,7 @@ namespace DONT_DELITE_____.Back
                     new float[]{0, 1+changegreen, 0, 0, 0},
                     new float[]{0, 0, 1+changeblue, 0, 0},
                     new float[]{0, 0, 0, 1+changetrans, 0},
-                    new float[]{0, 0, 0, 0, 1}
+                    new float[]{changelight, changelight, changelight, 0, 1}
                     //new float[] {1, 0, 0, 0, 0},
                     //new float[] {0, 1, 0, 0, 0},
                     //new float[] {0, 0, 1, 0, 0},
