@@ -39,8 +39,22 @@ namespace DONT_DELITE_____
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            FileService fs = new FileService();
-            fs.SavePhoto(this, bitmapList[currentBitmap]);
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    FileService fs = new FileService();
+                    fs.SavePhoto(this, bitmapList[currentBitmap]);
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
         }
         private void Invert_Click(object sender, RoutedEventArgs e)
         {
@@ -48,9 +62,9 @@ namespace DONT_DELITE_____
             {
                 if (bitmapList.Count > 0)
                 {
-                Effects ef = new Effects();
-                currentPicture = bitmapList[currentBitmap];
-                addPicture(ef.Invert(this, currentPicture));
+                    Effects ef = new Effects();
+                    currentPicture = bitmapList[currentBitmap];
+                    addPicture(ef.Invert(this, currentPicture));
                 }
                 else
                 {
@@ -64,15 +78,203 @@ namespace DONT_DELITE_____
         }
         private void Gray_Click(object sender, RoutedEventArgs e)
         {
-            Effects ef = new Effects();
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    currentPicture = bitmapList[currentBitmap];
+                    addPicture(ef.Gray(this, currentPicture));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+        private void Fog_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
             currentPicture = bitmapList[currentBitmap];
-            addPicture(ef.Gray(this, currentPicture));
+            addPicture(ef.Fog(this, currentPicture));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+        private void Flash_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    currentPicture = bitmapList[currentBitmap];
+                    addPicture(ef.Flash(this, currentPicture));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+        private void Frozen_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    currentPicture = bitmapList[currentBitmap];
+                    addPicture(ef.Frozen(this, currentPicture));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+        private void Arctic_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    currentPicture = bitmapList[currentBitmap];
+                    addPicture(ef.Arctic(this, currentPicture));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+        private void Sepia_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    currentPicture = bitmapList[currentBitmap];
+                    addPicture(ef.Sepia(this, currentPicture));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+        private void Kakao_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    currentPicture = bitmapList[currentBitmap];
+                    addPicture(ef.Kakao(this, currentPicture));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+        private void Cuji_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    currentPicture = bitmapList[currentBitmap];
+                    addPicture(ef.Cuji(this, currentPicture));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+        private void Dramatic_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    currentPicture = bitmapList[currentBitmap];
+                    addPicture(ef.Dramatic(this, currentPicture));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
         }
         private void Otraz_Click(object sender, RoutedEventArgs e)//vertical
         {
-            currentPicture = bitmapList[currentBitmap];
-            currentPicture.RotateFlip(RotateFlipType.Rotate180FlipY);
-            addPicture(currentPicture);
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    currentPicture = bitmapList[currentBitmap];
+                    currentPicture.RotateFlip(RotateFlipType.Rotate180FlipY);
+                    addPicture(currentPicture);
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
         }
         private void Rotate_Click(object sender, RoutedEventArgs e)
         {
@@ -103,7 +305,7 @@ namespace DONT_DELITE_____
         {
             CropPirture();
         }
-        private void RedSlider_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void RedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             try
             {
@@ -122,7 +324,7 @@ namespace DONT_DELITE_____
                 MessageBox.Show(except.Message);
             }
         }
-        private void GreenSlider_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void GreenSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             try
             {
@@ -141,7 +343,26 @@ namespace DONT_DELITE_____
                 MessageBox.Show(except.Message);
             }
         }
-        private void BlueSlider_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void BlueSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    addPicture(ef.Sliders(this, bitmapList[0]));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+        private void TransSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             try
             {

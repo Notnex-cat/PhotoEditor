@@ -29,14 +29,21 @@
                 <!--Эффекты-->
                 <TabItem Name="tabResize" Header="Эффекты" Foreground="White">
                     <StackPanel Orientation="Horizontal">
-                        <Button x:Name="Gray" Content="Серый"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Gray_Click"/>
-                        
+                        <Button x:Name="Gray" Content="Серый" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Gray_Click"/>
+                        <Button x:Name="Fog" Content="Fog" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Fog_Click"/>
+                        <Button x:Name="Flash" Content="Flash" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Flash_Click"/>
+                        <Button x:Name="Frozen" Content="Зима" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Frozen_Click"/>
+                        <Button x:Name="Arctic" Content="Arctic" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Arctic_Click"/>
+                        <Button x:Name="Sepia" Content="Сепия" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Sepia_Click"/>
+                        <Button x:Name="Kakao" Content="Какао" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Kakao_Click"/>
+                        <Button x:Name="Cuji" Content="Cuji" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Cuji_Click"/>
+                        <Button x:Name="Dramayic" Content="Драматичный" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Dramatic_Click"/>
                         <Button x:Name="Invert" Content="Инвертирование" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Invert_Click" Width="145" />
                         <!--Visibility="{Binding ElementVisible, UpdateSourceTrigger=PropertyChanged}" Command="{Binding InvertCommand}"-->
-                        <ComboBox Name="RGB" Text="RGB Choice" VerticalAlignment="Top" Grid.ColumnSpan="2" IsReadOnly="True">
-                            <Slider x:Name="RedSlider" Margin="0,10,0,0" Foreground="Red" Maximum="100" Minimum="-100" ValueChanged="RedSlider_ValueChanged_1" HorizontalAlignment="Left" Width="130"/>
-                            <Slider x:Name="GreenSlider" Margin="0,10,0,0" Foreground="Green" Maximum="100" Minimum="-100" ValueChanged="GreenSlider_ValueChanged_1" HorizontalAlignment="Left" Width="130" Height="30"/>
-                            <Slider x:Name="BlueSlider" Margin="0,10,0,0" Foreground="Blue" Maximum="100" Minimum="-100" ValueChanged="BlueSlider_ValueChanged_1" HorizontalAlignment="Left" Width="130" Height="30"/>
+                        <ComboBox Name="RGB" Text="RGB Choice" VerticalAlignment="Top" Grid.ColumnSpan="2" IsReadOnly="True" Width="100">
+                            <Slider x:Name="RedSlider" Margin="0,10,0,0" Foreground="Red" Maximum="100" Minimum="-100" ValueChanged="RedSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
+                            <Slider x:Name="GreenSlider" Margin="0,10,0,0" Foreground="Green" Maximum="100" Minimum="-100" ValueChanged="GreenSlider_ValueChanged" HorizontalAlignment="Left" Width="130" Height="30"/>
+                            <Slider x:Name="BlueSlider" Margin="0,10,0,0" Foreground="Blue" Maximum="100" Minimum="-100" ValueChanged="BlueSlider_ValueChanged" HorizontalAlignment="Left" Width="130" Height="30"/>
                         </ComboBox>
                     </StackPanel>
                 </TabItem>
@@ -66,8 +73,8 @@
                 <!--Фильтр-->
                 <TabItem Name="tabFilter" Header="Фильтр" Foreground="White">
                     <DockPanel Margin="0,0,0,284">
-                        
-                        
+                        <Slider x:Name="TransSlider" Margin="0,10,0,0" Foreground="Black" Minimum="-100" Maximum="0" ValueChanged="TransSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
+
                     </DockPanel>
                 </TabItem>
 
