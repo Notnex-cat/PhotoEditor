@@ -22,15 +22,17 @@ namespace DONT_DELITE_____
         public Start()
         {
             InitializeComponent();
+            //DataContext = new VM(imgPhoto);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            Close();
-            mainWindow.OpenPhoto();
-            mainWindow.Show();
-        }
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    MainWindow mainWindow = new MainWindow();
+        //    
+        //    mainWindow.OpenPhoto();
+        //    mainWindow.Show();
+        //    Close();
+        //}
     }
     
 }

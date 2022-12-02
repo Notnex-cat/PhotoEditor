@@ -4,32 +4,81 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="769" Width="1024">
-    <Grid x:Name="LayoutRoot">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="509*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
-        <Image Margin="14,98,8,15" x:Name="imgPhoto"/>
-        <Button x:Name="Save" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" Width="43" Click="Save_Click" Height="42" >
-            <StackPanel Width="12">
-                <Image Source="icons\file.png" Height="17" Width="17" RenderTransformOrigin="0.196,0.31" />
-            </StackPanel>
-        </Button>
-        <Button x:Name="Otraz" Content="Отразить по вертикали" HorizontalAlignment="Left" Margin="272,21,0,0" VerticalAlignment="Top" Width="186" Click="Otraz_Click" RenderTransformOrigin="0.784,0.574" />
-        <Button x:Name="Invert" Content="Инвертирование" HorizontalAlignment="Left" Margin="122,21,0,0" VerticalAlignment="Top" Click="Invert_Click" Width="145" />
-        <Button x:Name="Rotate" Content="Повернуть" HorizontalAlignment="Left" Margin="668,20,0,0" VerticalAlignment="Top" Click="Rotate_Click"/>
-        <Button x:Name="Otraz1" Content="Отразить по горизонтали" HorizontalAlignment="Left" Margin="463,21,0,0" VerticalAlignment="Top" Click="Otraz1_Click"/>
-        <Button x:Name="crop" Content="Crop" HorizontalAlignment="Left" Margin="776,21,0,0" VerticalAlignment="Top" Click="crop_Click"/>
-        <InkCanvas Background="Transparent" Margin="14,98,8,15" />
-        <Button x:Name="Gray" Content="Серый" HorizontalAlignment="Left" Margin="844,21,0,0" VerticalAlignment="Top" Width="85" Click="Gray_Click"/>
-        <ComboBox Name="RGB" Text="RGB Choice" Height="30" VerticalAlignment="Top" Margin="938,20,0,0" Grid.ColumnSpan="2" IsReadOnly="True">
-            <Slider x:Name="RedSlider" Margin="0,10,0,0" Foreground="Red" Maximum="100" Minimum="-100" ValueChanged="RedSlider_ValueChanged_1" HorizontalAlignment="Left" Width="130"/>
-            <Slider x:Name="GreenSlider" Margin="0,10,0,0" Foreground="Green" Maximum="100" Minimum="-100" ValueChanged="GreenSlider_ValueChanged_1" HorizontalAlignment="Left" Width="130" Height="30"/>
-            <Slider x:Name="BlueSlider" Margin="0,10,0,0" Foreground="Blue" Maximum="100" Minimum="-100" ValueChanged="BlueSlider_ValueChanged_1" HorizontalAlignment="Left" Width="130" Height="30"/>
-        </ComboBox>
-        <Button x:Name="reload" Content="reload" HorizontalAlignment="Left" Margin="542,63,0,0" VerticalAlignment="Top"  Click="reload_Click"/>
-        <Button x:Name="redo" Content="redo" HorizontalAlignment="Left" Margin="644,63,0,0" VerticalAlignment="Top" Click="redo_Click"/>
-        <Button x:Name="undo" Content="undo" HorizontalAlignment="Left" Margin="720,63,0,0" VerticalAlignment="Top" Click="undo_Click"/>
-    </Grid>
+        Title="MainWindow" Height="770" Width="1024">
+    <StackPanel Orientation="Vertical" >
+        <StackPanel Orientation="Horizontal">
+            <Menu >
+                <MenuItem Name="menuItemFile"
+                          Header="Файл" Height="29">
+                    <MenuItem Name="menuItemOpen"
+                          Header="Открыть"
+                             Click="Open_Click">
+                        <!--Visibility="{Binding ElementVisible, UpdateSourceTrigger=PropertyChanged}" Command="{Binding OpenCommand}-->
+                    </MenuItem>
+                    <MenuItem Name="menuItemSave"
+                          Header="Сохранить"
+                               Click="Save_Click">
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+            
+        </StackPanel>
+        <Grid x:Name="root" Height="751">
+            <TabControl>
+
+                <!--Эффекты-->
+                <TabItem Name="tabResize" Header="Эффекты" Foreground="White">
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="Gray" Content="Серый"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Gray_Click"/>
+                        
+                        <Button x:Name="Invert" Content="Инвертирование" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Invert_Click" Width="145" />
+                        <!--Visibility="{Binding ElementVisible, UpdateSourceTrigger=PropertyChanged}" Command="{Binding InvertCommand}"-->
+                        <ComboBox Name="RGB" Text="RGB Choice" VerticalAlignment="Top" Grid.ColumnSpan="2" IsReadOnly="True">
+                            <Slider x:Name="RedSlider" Margin="0,10,0,0" Foreground="Red" Maximum="100" Minimum="-100" ValueChanged="RedSlider_ValueChanged_1" HorizontalAlignment="Left" Width="130"/>
+                            <Slider x:Name="GreenSlider" Margin="0,10,0,0" Foreground="Green" Maximum="100" Minimum="-100" ValueChanged="GreenSlider_ValueChanged_1" HorizontalAlignment="Left" Width="130" Height="30"/>
+                            <Slider x:Name="BlueSlider" Margin="0,10,0,0" Foreground="Blue" Maximum="100" Minimum="-100" ValueChanged="BlueSlider_ValueChanged_1" HorizontalAlignment="Left" Width="130" Height="30"/>
+                        </ComboBox>
+                    </StackPanel>
+                </TabItem>
+
+                <!--Коррекция-->
+                <TabItem Name="tabCorrection" Header="Коррекция" Foreground="White">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,284">
+                        <Button x:Name="Otraz" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Otraz_Click">
+                            <Image Source="/icons/flipv.png"/>
+                        </Button>
+                        <Button x:Name="crop" HorizontalAlignment="Left" VerticalAlignment="Top" Click="crop_Click">
+                            <Image Source="/icons/crop.png" />
+                        </Button>
+                        <Button x:Name="Otraz1" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Otraz1_Click">
+                            <Image Source="/icons/flipg.png" />
+                        </Button>
+                        <Button x:Name="Rotate" Click="Rotate_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" >
+                            <Image Source="/icons/rotate.png" />
+                        </Button>
+                        <Button x:Name="undo" Content="undo" HorizontalAlignment="Left" VerticalAlignment="Top" Click="undo_Click"/>
+                        <Button x:Name="reload" Content="reload" HorizontalAlignment="Left" VerticalAlignment="Top" Click="reload_Click"/>
+                        <Button x:Name="redo" Content="redo" HorizontalAlignment="Left" VerticalAlignment="Top" Click="redo_Click"/>
+                        
+                    </StackPanel>
+                </TabItem>
+
+                <!--Фильтр-->
+                <TabItem Name="tabFilter" Header="Фильтр" Foreground="White">
+                    <DockPanel Margin="0,0,0,284">
+                        
+                        
+                    </DockPanel>
+                </TabItem>
+
+                <!--Эффекты-->
+                <TabItem Name="tabEffects" Header="Виньетирование" Foreground="White">
+                    <DockPanel Margin="0,0,0,284">
+                        </DockPanel>
+                </TabItem>
+            </TabControl>
+            <Image Margin="18,106,18,66" x:Name="imgPhoto"/>
+            <InkCanvas Background="Transparent" Margin="18,106,18,66"  VerticalAlignment="Top" Height="589" />
+        </Grid>
+    </StackPanel>
 </Window>

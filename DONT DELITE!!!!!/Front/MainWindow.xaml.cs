@@ -1,4 +1,5 @@
-﻿using Microsoft.Graph;
+﻿using DONT_DELITE_____.Back;
+using DONT_DELITE_____.Front;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -19,101 +19,183 @@ namespace DONT_DELITE_____
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<Bitmap> bitmapList = new List<Bitmap>();
-        private Bitmap currentPicture;
+        public List<Bitmap> bitmapList = new List<Bitmap>();
+        public Bitmap currentPicture;
         string way;
         private int currentBitmap = 0;
-
-        private ColorMatrix invertConMatrix = new ColorMatrix(
-           new float[][]
-            {
-                new float[] { -1,   0,   0,  0,  1},
-                new float[] {  0,  -1,   0,  0,  1},
-                new float[] {  0,   0,  -1,  0,  1},
-                new float[] {  0,   0,   0,  1,  0},
-                new float[] {  1,   1,   1,  0,  1}
-            });
-        private ColorMatrix greyscaleConMatrix = new ColorMatrix(
-            new float[][]
-            {
-                new float[] {.22f,.22f,.22f, 0, 0},
-                new float[] {.59f,.59f,.59f, 0, 0},
-                new float[] {.11f,.11f,.11f, 0, 0},
-                new float[] {  0,   0,   0,  1, 0},
-                new float[] {  0,   0,   0,  0, 1}
-            });
+        public Bitmap MWImg;
+        
         public MainWindow()
         {
             InitializeComponent();
+            //DataContext = new VM(imgPhoto);
         }
 
         #region Clicks
-
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            FileService fs = new FileService();
+            addPicture(fs.OpenPhoto(this));
+        }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            SavePhoto();
+            FileService fs = new FileService();
+            fs.SavePhoto(this, bitmapList[currentBitmap]);
         }
-
-
         private void Invert_Click(object sender, RoutedEventArgs e)
         {
-            InvertPicture();
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                Effects ef = new Effects();
+                currentPicture = bitmapList[currentBitmap];
+                addPicture(ef.Invert(this, currentPicture));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
         }
-
+        private void Gray_Click(object sender, RoutedEventArgs e)
+        {
+            Effects ef = new Effects();
+            currentPicture = bitmapList[currentBitmap];
+            addPicture(ef.Gray(this, currentPicture));
+        }
         private void Otraz_Click(object sender, RoutedEventArgs e)//vertical
         {
             currentPicture = bitmapList[currentBitmap];
             currentPicture.RotateFlip(RotateFlipType.Rotate180FlipY);
             addPicture(currentPicture);
         }
-
         private void Rotate_Click(object sender, RoutedEventArgs e)
         {
-            currentPicture = bitmapList[currentBitmap];
-            currentPicture.RotateFlip(RotateFlipType.Rotate270FlipXY);
-            addPicture(currentPicture);
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Rotate rotate = new Rotate();
+                    rotate.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
         }
-
         private void Otraz1_Click(object sender, RoutedEventArgs e)
         {
             currentPicture = bitmapList[currentBitmap];
             currentPicture.RotateFlip(RotateFlipType.Rotate180FlipX);
             addPicture(currentPicture);
         }
-        
         private void crop_Click(object sender, RoutedEventArgs e)
         {
             CropPirture();
         }
-
-        private void Gray_Click(object sender, RoutedEventArgs e)
-        {
-            GreyPicture();
-        }
-        
-        private void GreenSlider_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            currentPicture = hue(bitmapList[0]);
-        }
         private void RedSlider_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            currentPicture = hue(bitmapList[0]);
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    addPicture(ef.Sliders(this, bitmapList[0]));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+        private void GreenSlider_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    addPicture(ef.Sliders(this, bitmapList[0]));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
         }
         private void BlueSlider_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            currentPicture = hue(bitmapList[0]);
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    addPicture(ef.Sliders(this, bitmapList[0]));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
         }
-
         private void reload_Click(object sender, RoutedEventArgs e)
         {
-            setMainPicture(0);
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    setMainPicture(0);
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
         }
-
         private void redo_Click(object sender, RoutedEventArgs e)
         {
-            redoPicture();
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    redoPicture();
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
         }
-
         private void undo_Click(object sender, RoutedEventArgs e)
         {
             undoPicture();
@@ -121,34 +203,16 @@ namespace DONT_DELITE_____
         #endregion
 
         #region Functions
-        public void OpenPhoto()
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "JPEG Compressed Image (*.jpg)|*.jpg|GIF Image(*.gif)|*.gif|Bitmap Image(*.bmp)|*.bmp|PNG Image (*.png)|*.png";
-            openFileDialog.FilterIndex = 1;
-
-            Nullable<bool> result = openFileDialog.ShowDialog();
-
-            if (result == true)
-            {
-                currentPicture = new Bitmap(openFileDialog.FileName);
-                way = openFileDialog.FileName;
-                addPicture(currentPicture);
-                this.Title = openFileDialog.FileName;
-            }
-        }
         public void setMainPicture(int currentState)
         {
             imgPhoto.Source = BitmapToBitmapSource(bitmapList[currentState]);
             currentBitmap = currentState;
         }
-        
         public int CurrentBitmap
         {
             get { return currentBitmap; }
             set { currentBitmap = value; }
         }
-
         public void redoPicture()
         {
             if (currentBitmap < bitmapList.Count - 1)
@@ -165,95 +229,91 @@ namespace DONT_DELITE_____
                 setMainPicture(currentBitmap);
             }
         }
-
-        public void SavePhoto()
+        public void Rotation(int angle)
         {
-            SaveFileDialog save = new SaveFileDialog();
-            save.Title = "Save picture as ";
-            save.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
-            if (save.ShowDialog() == true)
+            //currentPicture = bitmapList[currentBitmap];
+            angle = angle + 90;
+            Console.WriteLine(angle);
+            System.Windows.Controls.Image imgControl = new System.Windows.Controls.Image();
+
+
+
+            // Create the TransformedBitmap
+
+            TransformedBitmap transformBmp = new TransformedBitmap();
+
+
+            // Properties must be set between BeginInit and EndInit
+
+            transformBmp.BeginInit();
+
+            transformBmp.Source = BitmapToBitmapSource(bitmapList[currentBitmap]);
+
+            RotateTransform transform = new RotateTransform(90);
+
+            transformBmp.Transform = transform;
+
+            transformBmp.EndInit();
+
+            // Set Image.Source to TransformedBitmap
+
+            imgControl.Source = transformBmp;
+
+
+
+            root.Children.Add(imgControl);
+            //Rot(currentPicture, angle);
+        }
+        public void Rot(Bitmap img, int angle)
+        {
+            if (angle > 180) angle -= 360;
+            System.Drawing.Color bkColor = System.Drawing.Color.Transparent;
+            System.Drawing.Imaging.PixelFormat pf = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
+            float sin = (float)Math.Abs(Math.Sin(angle * Math.PI / 180.0)); // в радианы
+            float cos = (float)Math.Abs(Math.Cos(angle * Math.PI / 180.0)); // тоже
+            float newImgWidth = sin * img.Height + cos * img.Width;
+            float newImgHeight = sin * img.Width + cos * img.Height;
+            float originX = 0f; float originY = 0f;
+            if (angle > 0)
             {
-                var encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)imgPhoto.Source));
-                using (Stream stm = System.IO.File.Create(save.FileName))
+                if (angle <= 90)
+                    originX = sin * img.Height;
+                else
                 {
-                    encoder.Save(stm);
+                    originX = newImgWidth;
+                    originY = newImgHeight - sin * img.Width;
                 }
             }
+            else
+            {
+                if (angle >= -90)
+                    originY = sin * img.Width;
+                else
+                {
+                    originX = newImgWidth - sin * img.Height;
+                    originY = newImgHeight;
+                }
+            }
+            Bitmap newImg = new Bitmap((int)newImgWidth * 2, (int)newImgHeight * 2, pf);
+            Graphics g = Graphics.FromImage(newImg);
+            g.Clear(bkColor);
+            g.TranslateTransform(originX * 2, originY * 2); // смещение начала координат
+            g.RotateTransform((float)angle); // начало поворота
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+            g.DrawImageUnscaled(img, 0, 0); // Рисую изображение  0, 0
+            g.Dispose();
+            addPicture(newImg);
         }
         public void setTempPicture(Bitmap aBitmap)
         {
             imgPhoto.Source = BitmapToBitmapSource(aBitmap);
         }
-
-        public Bitmap hue(Bitmap original)
-        {
-            float changered = (float)RedSlider.Value * 0.02f;
-            float changegreen = (float)GreenSlider.Value * 0.02f;
-            float changeblue = (float)BlueSlider.Value * 0.02f;
-            Bitmap aBitmap = new Bitmap(original.Width, original.Height);
-            Graphics g = Graphics.FromImage(aBitmap);
-
-            ColorMatrix colorMatrix = new ColorMatrix(new float[][]       // now creating the color matrix object to change the colors or apply  image filter on image
-                {
-                    new float[]{1+changered, 0, 0, 0, 0},
-                    new float[]{0, 1+changegreen, 0, 0, 0},
-                    new float[]{0, 0, 1+changeblue, 0, 0},
-                    new float[]{0, 0, 0, 1, 0},
-                    new float[]{0, 0, 0, 0, 1}
-                    //new float[] {1, 0, 0, 0, 0},
-                    //new float[] {0, 1, 0, 0, 0},
-                    //new float[] {0, 0, 1, 0, 0},
-                    //new float[] {0, 0, 0, 1, 0},
-                    //new float[] {changered, changegreen, changeblue, 0, 1}
-                });;
-
-            // Set an image attribute to our color matrix so that we can apply it to a bitmap
-            ImageAttributes attr = new ImageAttributes();
-            attr.SetColorMatrix(colorMatrix);
-
-            //Uses graphics class to redraw the bitmap with our Color matrix applied
-            g.DrawImage(original,                                                                   // Bitmap
-                            new System.Drawing.Rectangle(0, 0, original.Width, original.Height),    // Contains the image
-                            0,                                                                      // x, y, width, and height
-                            0,
-                            original.Width,
-                            original.Height,
-                            GraphicsUnit.Pixel,                                     // Unit of measure
-                            attr);                                                  // Our ColorMatrix being applied
-            g.Dispose();
-            addPicture(aBitmap);
-            return aBitmap;
-        }
-
-        private void InvertPicture()
-        {
-            try
-            {
-                if (bitmapList.Count > 0)
-                {
-                    currentPicture = bitmapList[currentBitmap];
-                    currentPicture = MatrixConvertBitmap(currentPicture, invertConMatrix);
-                    addPicture(currentPicture);
-                }
-                else
-                {
-                    MessageBox.Show("No Picture, please open a a picture to edit it");
-                }
-            }
-            catch (Exception except)
-            {
-                MessageBox.Show(except.Message);
-            }
-        }
-
         public void addPicture(Bitmap aBitmap)
         {
             bitmapList.Add(aBitmap);
             imgPhoto.Source = BitmapToBitmapSource(aBitmap);
             currentBitmap = bitmapList.Count - 1;
         }
-
         public static BitmapSource BitmapToBitmapSource(Bitmap source)
         {
             BitmapSource bitSrc = null;
@@ -277,14 +337,12 @@ namespace DONT_DELITE_____
             }
             return bitSrc;
         }
-
         internal static class NativeMethods
         {
             [DllImport("gdi32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool DeleteObject(IntPtr hObject);
         }
-
         private void CropPirture()
         {
             try
@@ -292,11 +350,10 @@ namespace DONT_DELITE_____
                 if (bitmapList.Count > 0)
                 {
                     DONT_DELITE_____.ColorDialog greyWindow = new DONT_DELITE_____.ColorDialog(this, "Crop");
-                    //greyWindow.Show();
                 }
                 else
                 {
-                    MessageBox.Show("No Picture, please open a a picture to edit it");
+                    MessageBox.Show("Откройте картинку");
                 }
             }
             catch (Exception except)
@@ -304,70 +361,6 @@ namespace DONT_DELITE_____
                 MessageBox.Show(except.Message);
             }
         }
-
-        public Bitmap MatrixConvertBitmap(Bitmap original, ColorMatrix cM)
-        {
-            Bitmap aBitmap = new Bitmap(original.Width, original.Height);
-            Graphics g = Graphics.FromImage(aBitmap);
-
-            ColorMatrix colorMatrix = cM;
-
-            // Set an image attribute to our color matrix so that we can apply it to a bitmap
-            ImageAttributes attr = new ImageAttributes();
-            attr.SetColorMatrix(colorMatrix);
-
-            //Uses graphics class to redraw the bitmap with our Color matrix applied
-            g.DrawImage(original,                                                                   // Bitmap
-                            new System.Drawing.Rectangle(0, 0, original.Width, original.Height),    // Contains the image
-                            0,                                                                      // x, y, width, and height
-                            0,
-                            original.Width,
-                            original.Height,
-                            GraphicsUnit.Pixel,                                     // Unit of measure
-                            attr);                                                  // Our ColorMatrix being applied
-            g.Dispose();
-
-            return aBitmap;
-        }
-
-        private void GreyPicture()
-        {
-            try
-            {
-                if (bitmapList.Count > 0)
-                {
-                    currentPicture = bitmapList[currentBitmap];
-                    currentPicture = MatrixConvertBitmap(currentPicture, greyscaleConMatrix);
-                    addPicture(currentPicture);
-                }
-                else
-                {
-                    MessageBox.Show("No Picture, please open a a picture to edit it");
-                }
-            }
-            catch (Exception except)
-            {
-                MessageBox.Show(except.Message);
-            }
-        }
-
-        System.Windows.Media.Imaging.BitmapImage BitmapToImageSource(Bitmap bitmap)
-        {
-            using (MemoryStream memory = new MemoryStream())
-            {
-                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
-                memory.Position = 0;
-                BitmapImage bitmapimage = new BitmapImage();
-                bitmapimage.BeginInit();
-                bitmapimage.StreamSource = memory;
-                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapimage.EndInit();
-
-                return bitmapimage;
-            }
-        }
-
-
         #endregion
     }
 }
