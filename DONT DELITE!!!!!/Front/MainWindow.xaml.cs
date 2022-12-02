@@ -400,6 +400,44 @@ namespace DONT_DELITE_____
                 MessageBox.Show(except.Message);
             }
         }
+        private void ContrSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    addPicture(ef.Sliders(this, bitmapList[0]));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+        private void SaturSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    Effects ef = new Effects();
+                    addPicture(ef.Sliders(this, bitmapList[0]));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
         private void reload_Click(object sender, RoutedEventArgs e)
         {
             try

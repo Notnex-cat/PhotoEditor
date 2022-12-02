@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MaterialDesignThemes.Wpf;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Input;
@@ -59,11 +60,11 @@ namespace DONT_DELITE_____.Back
         });
         ColorMatrix arctic = new ColorMatrix(new float[][]       // now creating the color matrix object to change the colors or apply  image filter on image
         {
-                    new float[]{1,0,0,0,0},
-                    new float[]{0,1,0,0,0},
-                    new float[]{0,0,1,0,0},
-                    new float[]{0, 0, 0, 1, 0},
-                    new float[]{0, 0, 1, 0, 1}
+              new float[]{1,0,0,0,0},
+              new float[]{0,1,0,0,0},
+              new float[]{0,0,1,0,0},
+              new float[]{0, 0, 0, 1, 0},
+              new float[]{0, 0, 1, 0, 1}
         });
         ColorMatrix sepia = new ColorMatrix(new float[][]       // now creating the color matrix object to change the colors or apply  image filter on image
         {
@@ -153,28 +154,37 @@ namespace DONT_DELITE_____.Back
         #endregion
         public Bitmap Sliders(MainWindow mainWindowCls, Bitmap original)
         {
-            float changered = (float)mainWindowCls.RedSlider.Value * 0.02f;
-            float changegreen = (float)mainWindowCls.GreenSlider.Value * 0.02f;
-            float changeblue = (float)mainWindowCls.BlueSlider.Value * 0.02f;
-            float changetrans = (float)mainWindowCls.TransSlider.Value * 0.02f;
-            float changelight = (float)mainWindowCls.LightSlider.Value * 0.005f;
+            float changered = (float)mainWindowCls.RedSlider.Value * 0.02f;//красный
+            float changegreen = (float)mainWindowCls.GreenSlider.Value * 0.02f;//зеленый
+            float changeblue = (float)mainWindowCls.BlueSlider.Value * 0.02f;//синий
+            float changetrans = (float)mainWindowCls.TransSlider.Value * 0.02f;//прозрачность
+            float b = (float)(0.01 + mainWindowCls.LightSlider.Value * 0.005f);//яркость
+            float c = (float)(0.01 + mainWindowCls.ContrSlider.Value * 0.01f);//контрастность
+            float s = (float)(0.01 + mainWindowCls.SaturSlider.Value * 0.02f);//насыщенность
+            float sr = (float)(1 - s) * 0.3086f;//
+            float sg = (float)(1 - s) * 0.6094f;//
+            float sb = (float)(1 - s) * 0.0820f;//
+
             Bitmap aBitmap = new Bitmap(original.Width, original.Height);
             Graphics g = Graphics.FromImage(aBitmap);
 
-            ColorMatrix colorMatrix = new ColorMatrix(new float[][]       // now creating the color matrix object to change the colors or apply  image filter on image
-                {
-                    new float[]{1+changered, 0, 0, 0, 0},
-                    new float[]{0, 1+changegreen, 0, 0, 0},
-                    new float[]{0, 0, 1+changeblue, 0, 0},
-                    new float[]{0, 0, 0, 1+changetrans, 0},
-                    new float[]{changelight, changelight, changelight, 0, 1}
-                    //new float[] {1, 0, 0, 0, 0},
-                    //new float[] {0, 1, 0, 0, 0},
-                    //new float[] {0, 0, 1, 0, 0},
-                    //new float[] {0, 0, 0, 1, 0},
-                    //new float[] {changered, changegreen, changeblue, 0, 1}
-                }); ;
+            ColorMatrix colorMatrix = new ColorMatrix(new float[][]{
+               new float[] {c*(sr+s) + changered, c*sr, c*(sr), 0, 0},
+               new float[] {c*sg, c*(sg+s) + changegreen, c *(sg), 0, 0},
+               new float[] {c*sb, c*sb, c*(sb+s) + changeblue, 0, 0},
+               new float[] {0, 0, 0, 1+changetrans, 0},
+               new float[] {b, b, b, 0, 1}
+            }); ;
 
+            //ColorMatrix colorMatrix = new ColorMatrix(new float[][]       // now creating the color matrix object to change the colors or apply  image filter on image
+            //    {
+            //        new float[]{(1 + changered)*changecontr, 0, 0, 0, 0},
+            //        new float[]{0, (1 + changegreen )* changecontr, 0, 0, 0},
+            //        new float[]{0, 0, (1 + changeblue) * changecontr, 0, 0},
+            //        new float[]{0, 0, 0, 1 + changetrans, 0},
+            //        new float[]{changelight, changelight, changelight, 0, 1}
+            //    }); ;
+            
             // Set an image attribute to our color matrix so that we can apply it to a bitmap
             ImageAttributes attr = new ImageAttributes();
             attr.SetColorMatrix(colorMatrix);
