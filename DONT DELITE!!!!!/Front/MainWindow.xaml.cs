@@ -309,7 +309,7 @@ namespace DONT_DELITE_____
                 {
                     //Rotate rotate = new Rotate();
                     //rotate.Show();
-                    Rot(45);
+                    Rotation(45);
                 }
                 else
                 {
@@ -541,39 +541,6 @@ namespace DONT_DELITE_____
         }
         public void Rotation(int angle)
         {
-            //currentPicture = bitmapList[currentBitmap];
-            //angle = angle + 90;
-            Console.WriteLine(angle);
-            System.Windows.Controls.Image imgControl = new System.Windows.Controls.Image();
-
-
-            // Create the TransformedBitmap
-
-            TransformedBitmap transformBmp = new TransformedBitmap();
-
-
-            // Properties must be set between BeginInit and EndInit
-
-            transformBmp.BeginInit();
-
-            transformBmp.Source = BitmapToBitmapSource(bitmapList[currentBitmap]);
-
-            RotateTransform transform = new RotateTransform(90);
-
-            transformBmp.Transform = transform;
-
-            transformBmp.EndInit();
-
-            // Set Image.Source to TransformedBitmap
-
-            imgControl.Source = transformBmp;
-
-            //addPicture();
-            root.Children.Add(imgControl);
-            //Rot(currentPicture, angle);
-        }
-        public void Rot(int angle)
-        {
             Bitmap img = bitmapList[currentBitmap];
             if (angle > 180) angle -= 360;
             System.Drawing.Color bkColor = System.Drawing.Color.Transparent;
@@ -603,10 +570,10 @@ namespace DONT_DELITE_____
                     originY = newImgHeight;
                 }
             }
-            Bitmap newImg = new Bitmap((int)newImgWidth * 2, (int)newImgHeight * 2, pf);
+            Bitmap newImg = new Bitmap((int)newImgWidth, (int)newImgHeight, pf);
             Graphics g = Graphics.FromImage(newImg);
             g.Clear(bkColor);
-            g.TranslateTransform(originX * 2, originY * 2); // смещение начала координат
+            g.TranslateTransform(originX, originY); // смещение начала координат
             g.RotateTransform((float)angle); // начало поворота
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
             g.DrawImageUnscaled(img, 0, 0); // Рисую изображение  0, 0
