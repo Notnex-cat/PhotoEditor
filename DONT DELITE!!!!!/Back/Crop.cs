@@ -16,15 +16,14 @@ namespace DONT_DELITE_____
         Rectangle CropRect;
         double ZoomedRatio;
         private MainWindow myParentWindow;
-        private ColorDialog myColorDialog;
         private int originalBitmapCount = new int();
         private Bitmap previewBitmap;
-        public Crop(MainWindow mPW, ColorDialog cD)
-        {
-            myParentWindow = mPW;
-            myColorDialog = cD;
-            originalBitmapCount = myParentWindow.CurrentBitmap;
-        }
+        //public Crop(MainWindow mPW, ColorDialog cD)
+        //{
+        //    myParentWindow = mPW;
+        //    //myColorDialog = cD;
+        //    originalBitmapCount = myParentWindow.CurrentBitmap;
+        //}
        
         
         public void CropImageButton_Click(object sender, RoutedEventArgs e)

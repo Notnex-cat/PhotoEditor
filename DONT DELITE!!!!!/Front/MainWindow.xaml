@@ -30,6 +30,7 @@
                 <TabItem Name="tabResize" Header="Эффекты" Foreground="White">
                     <StackPanel Orientation="Horizontal">
                         <Button x:Name="Gray" Content="Серый" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Gray_Click"/>
+                        <Button x:Name="Gaus" Content="Размытие по Гауссу" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Gaus_Click"/>
                         <Button x:Name="Fog" Content="Fog" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Fog_Click"/>
                         <Button x:Name="Flash" Content="Flash" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Flash_Click"/>
                         <Button x:Name="Frozen" Content="Зима" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Frozen_Click"/>
@@ -91,8 +92,8 @@
                         </DockPanel>
                 </TabItem>
             </TabControl>
-            <Image Margin="18,106,18,66" x:Name="imgPhoto"/>
-            <InkCanvas Background="Transparent" Margin="18,106,18,66"  VerticalAlignment="Top" Height="589" />
+            <Image Margin="18,106,18,66" x:Name="imgPhoto" MouseLeftButtonDown="Image_MouseLeftButtonDown_1"/>
+            <InkCanvas x:Name="InkCanvas" EditingMode="Ink" ClipToBounds="True" Background="Transparent" Margin="18,106,18,66"  VerticalAlignment="Top" Height="589" />
         </Grid>
     </StackPanel>
 </Window>

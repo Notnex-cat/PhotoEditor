@@ -14,7 +14,6 @@ namespace DONT_DELITE_____.Back
         private System.Windows.Controls.Image image;
         private int currentBitmap = 0;
         private Bitmap currentPicture;
-        private CustomBitmap myBitmap;
         private List<Bitmap> bitmapList = new List<Bitmap>();
 
         #region Matrix
@@ -111,6 +110,7 @@ namespace DONT_DELITE_____.Back
             currentPicture = MatrixConvertBitmap(currentPicture, gray);
             return currentPicture;
         }
+        
         public Bitmap Fog(MainWindow mainWindowCls, Bitmap currentPicture)
         {
             currentPicture = MatrixConvertBitmap(currentPicture, fog);
@@ -158,9 +158,9 @@ namespace DONT_DELITE_____.Back
             float changegreen = (float)mainWindowCls.GreenSlider.Value * 0.02f;//зеленый
             float changeblue = (float)mainWindowCls.BlueSlider.Value * 0.02f;//синий
             float changetrans = (float)mainWindowCls.TransSlider.Value * 0.02f;//прозрачность
-            float b = (float)(0.01 + mainWindowCls.LightSlider.Value * 0.005f);//яркость
-            float c = (float)(0.01 + mainWindowCls.ContrSlider.Value * 0.01f);//контрастность
-            float s = (float)(0.01 + mainWindowCls.SaturSlider.Value * 0.02f);//насыщенность
+            float b = (float)(mainWindowCls.LightSlider.Value * 0.005f);//яркость
+            float c = (float)(mainWindowCls.ContrSlider.Value * 0.01f);//контрастность
+            float s = (float)(mainWindowCls.SaturSlider.Value * 0.02f);//насыщенность
             float sr = (float)(1 - s) * 0.3086f;//
             float sg = (float)(1 - s) * 0.6094f;//
             float sb = (float)(1 - s) * 0.0820f;//

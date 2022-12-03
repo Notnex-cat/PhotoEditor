@@ -190,20 +190,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Back\ColorDialog.cs" />
     <Compile Include="Back\Crop.cs" />
-    <Compile Include="Back\CustomBitmap.cs" />
     <Compile Include="Back\Effects.cs" />
     <Compile Include="Back\FileService.cs" />
-    <Compile Include="Back\RelayCommand.cs" />
+    <Compile Include="Back\GaussianBlur.cs" />
     <Compile Include="Back\Сorrection.cs" />
+    <Compile Include="Front\GaussBlur.xaml.cs">
+      <DependentUpon>GaussBlur.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Front\Rotate.xaml.cs">
       <DependentUpon>Rotate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Front\Start.xaml.cs">
       <DependentUpon>Start.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VM.cs" />
+    <Page Include="Front\GaussBlur.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Front\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

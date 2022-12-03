@@ -1,5 +1,6 @@
 ﻿using DONT_DELITE_____.Back;
 using DONT_DELITE_____.Front;
+using Microsoft.Graph;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,11 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace DONT_DELITE_____
 {
@@ -85,6 +89,27 @@ namespace DONT_DELITE_____
                     Effects ef = new Effects();
                     currentPicture = bitmapList[currentBitmap];
                     addPicture(ef.Gray(this, currentPicture));
+                }
+                else
+                {
+                    MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+        private void Gaus_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    
+                    GaussBlur gb = new GaussBlur();
+                    //gb.Show();
+                    GausBlur1(5);
                 }
                 else
                 {
@@ -282,8 +307,9 @@ namespace DONT_DELITE_____
             {
                 if (bitmapList.Count > 0)
                 {
-                    Rotate rotate = new Rotate();
-                    rotate.Show();
+                    //Rotate rotate = new Rotate();
+                    //rotate.Show();
+                    Rot(45);
                 }
                 else
                 {
@@ -294,6 +320,12 @@ namespace DONT_DELITE_____
             {
                 MessageBox.Show(except.Message);
             }
+        }
+        public void GausBlur1(int i)
+        {
+            Bitmap img = bitmapList[currentBitmap];
+            GaussianBlur gaussianBlur = new GaussianBlur(this, img);
+            addPicture(gaussianBlur.Process(i));
         }
         private void Otraz1_Click(object sender, RoutedEventArgs e)
         {
@@ -515,7 +547,6 @@ namespace DONT_DELITE_____
             System.Windows.Controls.Image imgControl = new System.Windows.Controls.Image();
 
 
-
             // Create the TransformedBitmap
 
             TransformedBitmap transformBmp = new TransformedBitmap();
@@ -525,7 +556,7 @@ namespace DONT_DELITE_____
 
             transformBmp.BeginInit();
 
-            transformBmp.Source = BitmapToBitmapSource(bitmapList[currentBitmap]);
+            transformBmp.Source = BitmapToBitmapSource(currentPicture);
 
             RotateTransform transform = new RotateTransform(90);
 
@@ -537,13 +568,13 @@ namespace DONT_DELITE_____
 
             imgControl.Source = transformBmp;
 
-
-
+            //addPicture();
             root.Children.Add(imgControl);
             //Rot(currentPicture, angle);
         }
-        public void Rot(Bitmap img, int angle)
+        public void Rot(int angle)
         {
+            Bitmap img = currentPicture;
             if (angle > 180) angle -= 360;
             System.Drawing.Color bkColor = System.Drawing.Color.Transparent;
             System.Drawing.Imaging.PixelFormat pf = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
@@ -627,7 +658,7 @@ namespace DONT_DELITE_____
             {
                 if (bitmapList.Count > 0)
                 {
-                    DONT_DELITE_____.ColorDialog greyWindow = new DONT_DELITE_____.ColorDialog(this, "Crop");
+                    //DONT_DELITE_____.ColorDialog greyWindow = new DONT_DELITE_____.ColorDialog(this, "Crop");
                 }
                 else
                 {
@@ -640,5 +671,19 @@ namespace DONT_DELITE_____
             }
         }
         #endregion
+        private void Image_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        {
+            Ellipse ellipse = new Ellipse();
+            ellipse.Fill = System.Windows.Media.Brushes.Sienna;
+            ellipse.Width = 100;
+            ellipse.Height = 100;
+            ellipse.StrokeThickness = 2;
+
+            InkCanvas.Children.Add(ellipse);
+
+            Canvas.SetLeft(ellipse, e.GetPosition(imgPhoto).X);
+            Canvas.SetTop(ellipse, e.GetPosition(imgPhoto).Y);
+            Console.WriteLine("yytouiy");
+        }
     }
 }
