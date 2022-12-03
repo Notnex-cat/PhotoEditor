@@ -542,7 +542,7 @@ namespace DONT_DELITE_____
         public void Rotation(int angle)
         {
             //currentPicture = bitmapList[currentBitmap];
-            angle = angle + 90;
+            //angle = angle + 90;
             Console.WriteLine(angle);
             System.Windows.Controls.Image imgControl = new System.Windows.Controls.Image();
 
@@ -556,7 +556,7 @@ namespace DONT_DELITE_____
 
             transformBmp.BeginInit();
 
-            transformBmp.Source = BitmapToBitmapSource(currentPicture);
+            transformBmp.Source = BitmapToBitmapSource(bitmapList[currentBitmap]);
 
             RotateTransform transform = new RotateTransform(90);
 
@@ -574,7 +574,7 @@ namespace DONT_DELITE_____
         }
         public void Rot(int angle)
         {
-            Bitmap img = currentPicture;
+            Bitmap img = bitmapList[currentBitmap];
             if (angle > 180) angle -= 360;
             System.Drawing.Color bkColor = System.Drawing.Color.Transparent;
             System.Drawing.Imaging.PixelFormat pf = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
