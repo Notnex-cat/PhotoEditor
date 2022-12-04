@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="MainWindow" Height="770" Width="1024">
     <StackPanel Orientation="Vertical" >
         <StackPanel Orientation="Horizontal">
@@ -20,62 +21,56 @@
                                Click="Save_Click">
                     </MenuItem>
                 </MenuItem>
-                <Button x:Name="undo" HorizontalAlignment="Left" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" VerticalAlignment="Top" Click="undo_Click" Background="White">
+                <Button x:Name="undo" HorizontalAlignment="Left" Width="45" VerticalAlignment="Top" Click="undo_Click" Background="Transparent" BorderBrush="Transparent">
                     <Image Source="/icons/undo.png"/>
                 </Button>
-                <Button x:Name="reload" HorizontalAlignment="Left" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" VerticalAlignment="Top" Click="reload_Click" Background="White">
+                <Button x:Name="reload" HorizontalAlignment="Left" Width="45"  VerticalAlignment="Top" Click="reload_Click" Background="Transparent" BorderBrush="Transparent">
                     <Image Source="/icons/reload.png"/>
                 </Button>
-                <Button x:Name="redo" HorizontalAlignment="Left" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" VerticalAlignment="Top" Click="redo_Click" Background="White">
+                <Button x:Name="redo" HorizontalAlignment="Left" Width="45"  VerticalAlignment="Top" Click="redo_Click" Background="Transparent" BorderBrush="Transparent">
                     <Image Source="/icons/redo.png"/>
                 </Button>
             </Menu>
-            
+
         </StackPanel>
         <Grid x:Name="root" Height="751">
             <TabControl>
 
                 <!--Эффекты-->
                 <TabItem Name="tabResize" Header="Эффекты" Foreground="White">
-                    <StackPanel Background="White" Orientation="Horizontal">
-                        <Button x:Name="Gray" Content="Серый" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Gray_Click"/>
-                        <Button x:Name="Gaus" Content="Размытие" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Gaus_Click"/>
-                        <TextBox x:Name="g" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Width="80" Foreground="Black"/>
-                        <Button x:Name="Fog" Content="Fog" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Fog_Click"/>
-                        <Button x:Name="Flash" Content="Flash" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Flash_Click"/>
-                        <Button x:Name="Frozen" Content="Зима" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Frozen_Click"/>
-                        <Button x:Name="Arctic" Content="Arctic" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Arctic_Click"/>
-                        <Button x:Name="Sepia" Content="Сепия" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Sepia_Click"/>
-                        <Button x:Name="Kakao" Content="Какао" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Kakao_Click"/>
-                        <Button x:Name="Cuji" Content="Cuji" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Cuji_Click"/>
-                        <Button x:Name="Dramayic" Content="Драматичный" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Dramatic_Click"/>
-                        <Button x:Name="Invert" Content="Инвертирование" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Invert_Click" Width="145" />
-                        <!--Visibility="{Binding ElementVisible, UpdateSourceTrigger=PropertyChanged}" Command="{Binding InvertCommand}"-->
-                        <ComboBox Name="RGB" Text="RGB Choice" VerticalAlignment="Top" Grid.ColumnSpan="2" IsReadOnly="True" Width="100">
-                            <Slider x:Name="RedSlider" Margin="0,10,0,0" Foreground="Red" Maximum="100" Minimum="-100" ValueChanged="RedSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
-                            <Slider x:Name="GreenSlider" Margin="0,10,0,0" Foreground="Green" Maximum="100" Minimum="-100" ValueChanged="GreenSlider_ValueChanged" HorizontalAlignment="Left" Width="130" Height="30"/>
-                            <Slider x:Name="BlueSlider" Margin="0,10,0,0" Foreground="Blue" Maximum="100" Minimum="-100" ValueChanged="BlueSlider_ValueChanged" HorizontalAlignment="Left" Width="130" Height="30"/>
-                        </ComboBox>
+                    <StackPanel Background="White" Orientation="Horizontal" Margin="0,0,0,284">
+                        <Button x:Name="Gray" Height="36" Content="Серый" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Gray_Click"/>
+                        <Button x:Name="Gaus" Height="36" Content="Размытие" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Gaus_Click"/>
+                        <TextBox x:Name="g" materialDesign:HintAssist.Hint="Размытость" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextWrapping="Wrap" Foreground="Black"/>
+                        <Button x:Name="Fog" Height="36" Content="Fog" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Fog_Click"/>
+                        <Button x:Name="Flash" Height="36" Content="Flash" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Flash_Click"/>
+                        <Button x:Name="Frozen" Height="36" Content="Зима" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Frozen_Click"/>
+                        <Button x:Name="Arctic" Height="36" Content="Arctic" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Arctic_Click"/>
+                        <Button x:Name="Sepia" Height="36" Content="Сепия" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Sepia_Click"/>
+                        <Button x:Name="Kakao" Height="36" Content="Какао" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Kakao_Click"/>
+                        <Button x:Name="Cuji" Height="36" Content="Cuji" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Cuji_Click"/>
+                        <Button x:Name="Dramayic" Height="36" Content="Драматичный" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Dramatic_Click"/>
+                        <Button x:Name="Invert" Height="36" Content="Инвертирование" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Invert_Click" Width="145" />
                     </StackPanel>
                 </TabItem>
 
                 <!--Коррекция-->
                 <TabItem Name="tabCorrection" Header="Коррекция" Foreground="White">
                     <StackPanel Background="White" Orientation="Horizontal" Margin="0,0,0,284">
-                        <Button x:Name="Otraz" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Otraz_Click">
+                        <Button x:Name="Otraz" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Click="Otraz_Click">
                             <Image Source="/icons/flipv.png"/>
                         </Button>
-                        <Button x:Name="crop" HorizontalAlignment="Left" VerticalAlignment="Top" Click="crop_Click">
+                        <Button x:Name="crop" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Click="crop_Click">
                             <Image Source="/icons/crop.png" />
                         </Button>
-                        <Button x:Name="Otraz1" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Otraz1_Click">
+                        <Button x:Name="Otraz1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Click="Otraz1_Click">
                             <Image Source="/icons/flipg.png" />
                         </Button>
-                        <Button x:Name="Rotate" Click="Rotate_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Button x:Name="Rotate" Click="Rotate_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" >
                             <Image Source="/icons/rotate.png" />
                         </Button>
-                        <TextBox x:Name="angle" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Width="80" Foreground="Black"/>
-                        
+                        <TextBox x:Name="angle" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Градусы" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" TextWrapping="Wrap" Foreground="Black"/>
+
                     </StackPanel>
                 </TabItem>
 
@@ -83,21 +78,25 @@
                 <TabItem Name="tabFilter" Header="Фильтр" Foreground="White">
                     <DockPanel Background="White" Margin="0,0,0,284">
                         <TextBlock Text="  Насыщенность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
-                        <Slider x:Name="SaturSlider" Margin="0,10,0,0" Foreground="Cyan" Minimum="-100" Maximum="100" ValueChanged="SaturSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
+                        <Slider x:Name="SaturSlider" Margin="0,10,0,0" Value="100" Foreground="Cyan" Minimum="-100" Maximum="100" ValueChanged="SaturSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
                         <TextBlock Text="  Прозрачность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
                         <Slider x:Name="TransSlider" Margin="0,10,0,0" Foreground="Black" Minimum="-100" Maximum="0" ValueChanged="TransSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
                         <TextBlock Text="  Якость  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
                         <Slider x:Name="LightSlider" Margin="0,10,0,0" Foreground="Wheat" Minimum="-100" Maximum="100" ValueChanged="LightSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
                         <TextBlock Text="  Контрастность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
-                        <Slider x:Name="ContrSlider" Margin="0,10,0,0" Foreground="Gray" Minimum="0" Maximum="100" ValueChanged="ContrSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
-
+                        <Slider x:Name="ContrSlider" Margin="0,10,0,0" Value="100" Foreground="Gray" Minimum="0" Maximum="100" ValueChanged="ContrSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
+                        <ComboBox Name="RGB" Text="RGB Choice"  VerticalAlignment="Top" Grid.ColumnSpan="2" IsReadOnly="True" Width="100" Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
+                            <Slider x:Name="RedSlider" Margin="0,10,0,0" Foreground="Red" Maximum="100" Minimum="-100" ValueChanged="RedSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
+                            <Slider x:Name="GreenSlider" Margin="0,10,0,0" Foreground="Green" Maximum="100" Minimum="-100" ValueChanged="GreenSlider_ValueChanged" HorizontalAlignment="Left" Width="130" Height="30"/>
+                            <Slider x:Name="BlueSlider" Margin="0,10,0,0" Foreground="Blue" Maximum="100" Minimum="-100" ValueChanged="BlueSlider_ValueChanged" HorizontalAlignment="Left" Width="130" Height="30"/>
+                        </ComboBox>
                     </DockPanel>
                 </TabItem>
 
                 <!--Эффекты-->
                 <TabItem Name="tabEffects" Header="Виньетирование" Foreground="White">
                     <DockPanel Background="White" Margin="0,0,0,284">
-                        </DockPanel>
+                    </DockPanel>
                 </TabItem>
             </TabControl>
             <Image Margin="18,106,18,66" x:Name="imgPhoto" MouseLeftButtonDown="Image_MouseLeftButtonDown_1"/>

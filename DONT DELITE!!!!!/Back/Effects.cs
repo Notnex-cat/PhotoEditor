@@ -154,9 +154,9 @@ namespace DONT_DELITE_____.Back
         #endregion
         public Bitmap Sliders(MainWindow mainWindowCls, Bitmap original)
         {
-            float changered = (float)mainWindowCls.RedSlider.Value * 0.02f;//красный
-            float changegreen = (float)mainWindowCls.GreenSlider.Value * 0.02f;//зеленый
-            float changeblue = (float)mainWindowCls.BlueSlider.Value * 0.02f;//синий
+            float changered = (float)mainWindowCls.RedSlider.Value * 0.002f;//красный
+            float changegreen = (float)mainWindowCls.GreenSlider.Value * 0.002f;//зеленый
+            float changeblue = (float)mainWindowCls.BlueSlider.Value * 0.002f;//синий
             float changetrans = (float)mainWindowCls.TransSlider.Value * 0.02f;//прозрачность
             float b = (float)(mainWindowCls.LightSlider.Value * 0.005f);//яркость
             float c = (float)(mainWindowCls.ContrSlider.Value * 0.01f);//контрастность

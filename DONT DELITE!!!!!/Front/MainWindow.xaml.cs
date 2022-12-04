@@ -1,5 +1,4 @@
 ﻿using DONT_DELITE_____.Back;
-using DONT_DELITE_____.Front;
 using Microsoft.Graph;
 using Microsoft.Win32;
 using System;
@@ -438,12 +437,12 @@ namespace DONT_DELITE_____
                 }
                 else
                 {
-                    MessageBox.Show("Откройте картинку");
+                    //MessageBox.Show("Откройте картинку");
                 }
             }
             catch (Exception except)
             {
-                MessageBox.Show(except.Message);
+                //MessageBox.Show(except.Message);
             }
         }
         private void SaturSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -457,12 +456,12 @@ namespace DONT_DELITE_____
                 }
                 else
                 {
-                    MessageBox.Show("Откройте картинку");
+                    //MessageBox.Show("Откройте картинку");
                 }
             }
             catch (Exception except)
             {
-                MessageBox.Show(except.Message);
+                //MessageBox.Show(except.Message);
             }
         }
         private void reload_Click(object sender, RoutedEventArgs e)

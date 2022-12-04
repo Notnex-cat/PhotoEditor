@@ -196,19 +196,9 @@
     <Compile Include="Back\GaussianBlur.cs" />
     <Compile Include="Back\Rotation.cs" />
     <Compile Include="Back\Сorrection.cs" />
-    <Compile Include="Front\GaussBlur.xaml.cs">
-      <DependentUpon>GaussBlur.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Front\Rotate.xaml.cs">
-      <DependentUpon>Rotate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Front\Start.xaml.cs">
       <DependentUpon>Start.xaml</DependentUpon>
     </Compile>
-    <Page Include="Front\GaussBlur.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Front\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -221,10 +211,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Front\Rotate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Front\Start.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
