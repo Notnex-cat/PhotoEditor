@@ -194,6 +194,7 @@
     <Compile Include="Back\Effects.cs" />
     <Compile Include="Back\FileService.cs" />
     <Compile Include="Back\GaussianBlur.cs" />
+    <Compile Include="Back\Rotation.cs" />
     <Compile Include="Back\Сorrection.cs" />
     <Compile Include="Front\GaussBlur.xaml.cs">
       <DependentUpon>GaussBlur.xaml</DependentUpon>
@@ -271,6 +272,13 @@
   <ItemGroup>
     <Resource Include="icons\flipg.png" />
     <Resource Include="icons\flipv.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\reload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\redo.png" />
+    <Resource Include="icons\undo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Text.Json.6.0.6\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.6\build\System.Text.Json.targets')" />

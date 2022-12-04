@@ -106,10 +106,11 @@ namespace DONT_DELITE_____
             {
                 if (bitmapList.Count > 0)
                 {
-                    
-                    GaussBlur gb = new GaussBlur();
+                    int i = Int32.Parse(g.Text);
+                    currentPicture = bitmapList[currentBitmap];
+                    //GaussBlur gb = new GaussBlur();
                     //gb.Show();
-                    GausBlur1(5);
+                    GausBlur1(i);
                 }
                 else
                 {
@@ -307,9 +308,9 @@ namespace DONT_DELITE_____
             {
                 if (bitmapList.Count > 0)
                 {
-                    //Rotate rotate = new Rotate();
-                    //rotate.Show();
-                    Rotation(45);
+                    int number = Int32.Parse(angle.Text);
+                    MainWindow mainWindow = new MainWindow();
+                    Ron(number);
                 }
                 else
                 {
@@ -320,12 +321,6 @@ namespace DONT_DELITE_____
             {
                 MessageBox.Show(except.Message);
             }
-        }
-        public void GausBlur1(int i)
-        {
-            Bitmap img = bitmapList[currentBitmap];
-            GaussianBlur gaussianBlur = new GaussianBlur(this, img);
-            addPicture(gaussianBlur.Process(i));
         }
         private void Otraz1_Click(object sender, RoutedEventArgs e)
         {
@@ -531,6 +526,28 @@ namespace DONT_DELITE_____
                 setMainPicture(currentBitmap);
             }
         }
+        public void Ron(int i)
+        {
+            RotateTransform rotateTransform = new RotateTransform(i);
+            imgPhoto.RenderTransform = rotateTransform;
+            System.Windows.Point p = new System.Windows.Point(0.5, 0.5);
+            imgPhoto.RenderTransformOrigin = p;
+            //RenderSize rs = new RenderSize(currentPicture.Width, currentPicture.Height);
+
+
+
+            //imgPhoto.TranslateTransform(originX, originY);
+            //Back.Rotation r = new Back.Rotation();
+            //Console.WriteLine(bitmapList.Count);
+            //Console.WriteLine(currentBitmap);
+            //addPicture(r.Rotat(this, i, bitmapList[currentBitmap]));
+        }
+        public void GausBlur1(int i)
+        {
+            Bitmap img = currentPicture;
+            GaussianBlur gaussianBlur = new GaussianBlur(this, img);
+            addPicture(gaussianBlur.Process(i));
+        }
         public void undoPicture()
         {
             if (currentBitmap > 0)
@@ -538,47 +555,6 @@ namespace DONT_DELITE_____
                 currentBitmap--;
                 setMainPicture(currentBitmap);
             }
-        }
-        public void Rotation(int angle)
-        {
-            Bitmap img = bitmapList[currentBitmap];
-            if (angle > 180) angle -= 360;
-            System.Drawing.Color bkColor = System.Drawing.Color.Transparent;
-            System.Drawing.Imaging.PixelFormat pf = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
-            float sin = (float)Math.Abs(Math.Sin(angle * Math.PI / 180.0)); // в радианы
-            float cos = (float)Math.Abs(Math.Cos(angle * Math.PI / 180.0)); // тоже
-            float newImgWidth = sin * img.Height + cos * img.Width;
-            float newImgHeight = sin * img.Width + cos * img.Height;
-            float originX = 0f; float originY = 0f;
-            if (angle > 0)
-            {
-                if (angle <= 90)
-                    originX = sin * img.Height;
-                else
-                {
-                    originX = newImgWidth;
-                    originY = newImgHeight - sin * img.Width;
-                }
-            }
-            else
-            {
-                if (angle >= -90)
-                    originY = sin * img.Width;
-                else
-                {
-                    originX = newImgWidth - sin * img.Height;
-                    originY = newImgHeight;
-                }
-            }
-            Bitmap newImg = new Bitmap((int)newImgWidth, (int)newImgHeight, pf);
-            Graphics g = Graphics.FromImage(newImg);
-            g.Clear(bkColor);
-            g.TranslateTransform(originX, originY); // смещение начала координат
-            g.RotateTransform((float)angle); // начало поворота
-            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-            g.DrawImageUnscaled(img, 0, 0); // Рисую изображение  0, 0
-            g.Dispose();
-            addPicture(newImg);
         }
         public void setTempPicture(Bitmap aBitmap)
         {

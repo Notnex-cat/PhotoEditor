@@ -28,7 +28,7 @@ namespace DONT_DELITE_____.Front
         {
             int number = Int32.Parse(angle.Text);
             MainWindow mainWindow = new MainWindow();
-            mainWindow.Rotation(number);
+            mainWindow.Ron(number);
         }
     }
 }

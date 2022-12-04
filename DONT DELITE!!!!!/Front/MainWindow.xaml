@@ -20,6 +20,15 @@
                                Click="Save_Click">
                     </MenuItem>
                 </MenuItem>
+                <Button x:Name="undo" HorizontalAlignment="Left" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" VerticalAlignment="Top" Click="undo_Click" Background="White">
+                    <Image Source="/icons/undo.png"/>
+                </Button>
+                <Button x:Name="reload" HorizontalAlignment="Left" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" VerticalAlignment="Top" Click="reload_Click" Background="White">
+                    <Image Source="/icons/reload.png"/>
+                </Button>
+                <Button x:Name="redo" HorizontalAlignment="Left" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" VerticalAlignment="Top" Click="redo_Click" Background="White">
+                    <Image Source="/icons/redo.png"/>
+                </Button>
             </Menu>
             
         </StackPanel>
@@ -28,9 +37,10 @@
 
                 <!--Эффекты-->
                 <TabItem Name="tabResize" Header="Эффекты" Foreground="White">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Background="White" Orientation="Horizontal">
                         <Button x:Name="Gray" Content="Серый" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Gray_Click"/>
-                        <Button x:Name="Gaus" Content="Размытие по Гауссу" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Gaus_Click"/>
+                        <Button x:Name="Gaus" Content="Размытие" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Gaus_Click"/>
+                        <TextBox x:Name="g" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Width="80" Foreground="Black"/>
                         <Button x:Name="Fog" Content="Fog" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Fog_Click"/>
                         <Button x:Name="Flash" Content="Flash" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Flash_Click"/>
                         <Button x:Name="Frozen" Content="Зима" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Frozen_Click"/>
@@ -51,7 +61,7 @@
 
                 <!--Коррекция-->
                 <TabItem Name="tabCorrection" Header="Коррекция" Foreground="White">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,284">
+                    <StackPanel Background="White" Orientation="Horizontal" Margin="0,0,0,284">
                         <Button x:Name="Otraz" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Otraz_Click">
                             <Image Source="/icons/flipv.png"/>
                         </Button>
@@ -64,16 +74,14 @@
                         <Button x:Name="Rotate" Click="Rotate_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" >
                             <Image Source="/icons/rotate.png" />
                         </Button>
-                        <Button x:Name="undo" Content="undo" HorizontalAlignment="Left" VerticalAlignment="Top" Click="undo_Click"/>
-                        <Button x:Name="reload" Content="reload" HorizontalAlignment="Left" VerticalAlignment="Top" Click="reload_Click"/>
-                        <Button x:Name="redo" Content="redo" HorizontalAlignment="Left" VerticalAlignment="Top" Click="redo_Click"/>
+                        <TextBox x:Name="angle" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Width="80" Foreground="Black"/>
                         
                     </StackPanel>
                 </TabItem>
 
                 <!--Фильтр-->
                 <TabItem Name="tabFilter" Header="Фильтр" Foreground="White">
-                    <DockPanel Margin="0,0,0,284">
+                    <DockPanel Background="White" Margin="0,0,0,284">
                         <TextBlock Text="  Насыщенность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
                         <Slider x:Name="SaturSlider" Margin="0,10,0,0" Foreground="Cyan" Minimum="-100" Maximum="100" ValueChanged="SaturSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
                         <TextBlock Text="  Прозрачность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
@@ -88,7 +96,7 @@
 
                 <!--Эффекты-->
                 <TabItem Name="tabEffects" Header="Виньетирование" Foreground="White">
-                    <DockPanel Margin="0,0,0,284">
+                    <DockPanel Background="White" Margin="0,0,0,284">
                         </DockPanel>
                 </TabItem>
             </TabControl>
