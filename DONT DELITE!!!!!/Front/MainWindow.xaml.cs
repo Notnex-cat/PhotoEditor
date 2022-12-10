@@ -35,7 +35,7 @@ namespace DONT_DELITE_____
         public Bitmap currentPicture;
         private int currentBitmap = 0;
         public Bitmap MWImg;
-
+        private bool PenVisible = false;
         public Back.Drawing mcolor { get; set; }
         public Color clr { get; set; }
 
@@ -465,7 +465,7 @@ namespace DONT_DELITE_____
             }
             catch (Exception except)
             {
-                //MessageBox.Show(except.Message);
+                MessageBox.Show(except.Message);
             }
         }
         private void SaturSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -484,7 +484,7 @@ namespace DONT_DELITE_____
             }
             catch (Exception except)
             {
-                //MessageBox.Show(except.Message);
+                MessageBox.Show(except.Message);
             }
         }
         private void reload_Click(object sender, RoutedEventArgs e)
@@ -565,6 +565,19 @@ namespace DONT_DELITE_____
             catch (Exception except)
             {
                 MessageBox.Show(except.Message);
+            }
+        }
+        private void Pen_Click(object sender, RoutedEventArgs e)
+        {
+            
+            if(PenVisible == false)
+            {
+                InkCanvas.Visibility = Visibility.Visible;
+                PenVisible = true;
+            }
+            else {
+                InkCanvas.Visibility = Visibility.Hidden;
+                PenVisible = false;
             }
         }
         #endregion
