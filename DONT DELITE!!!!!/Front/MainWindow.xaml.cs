@@ -574,6 +574,14 @@ namespace DONT_DELITE_____
                 PenVisible = false;
             }
         }
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tabFilter.IsSelected)
+            {
+                effectsPicture = bitmapList[currentBitmap];
+                addPicture(effectsPicture);
+            }
+        }
         #endregion
 
         #region Functions
@@ -682,7 +690,6 @@ namespace DONT_DELITE_____
                 MessageBox.Show(except.Message);
             }
         }
-
         private void SaveCanvas(Canvas canvas, int dpi)
         {
             var width = bitmapList[currentBitmap].Width;
@@ -702,13 +709,11 @@ namespace DONT_DELITE_____
 
             SaveAsPng(rtb);
         }
-
         private void SaveAsPng(RenderTargetBitmap bmp)
         {
             addPicture(RTBtoB(bmp));
             this.InkCanvas.Strokes.Clear();
         }
-
         private Bitmap RTBtoB(RenderTargetBitmap bmp)
         {
             MemoryStream stream = new MemoryStream();
@@ -719,17 +724,23 @@ namespace DONT_DELITE_____
             return bitmap;
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        public void NewLayer(double PixelHeight, double PixelWidth)
         {
-            if (tabFilter.IsSelected)
-            {
-                effectsPicture = bitmapList[currentBitmap];
-                addPicture(effectsPicture);
-            }
+            RenderTargetBitmap bitmap = new RenderTargetBitmap(300, 400, 96, 96, PixelFormats.Pbgra32);
+            //bitmap.Render(this.imgPhoto);
+            //addPicture();
+            Effects ef = new Effects();
+            currentPicture = RTBtoB(bitmap);
+            addPicture(ef.Invert(this, currentPicture));
+
         }
 
-
-
         #endregion
+
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            NewLayer(1.0, 1.0);
+        }
     }
 }

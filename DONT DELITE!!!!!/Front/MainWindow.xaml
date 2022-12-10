@@ -94,6 +94,7 @@
                 <!--Эффекты-->
                 <TabItem Name="tabEffects" Header="Виньетирование" Foreground="White">
                     <DockPanel Background="White">
+                        <Button x:Name="New" Click="New_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="36"/>
 
                     </DockPanel>
                 </TabItem>

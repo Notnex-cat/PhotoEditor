@@ -17,6 +17,14 @@ namespace DONT_DELITE_____.Back
         private List<Bitmap> bitmapList = new List<Bitmap>();
 
         #region Matrix
+        ColorMatrix white = new ColorMatrix(new float[][]
+        {
+            new float[] { 1,   0,   0,  0,  0},
+            new float[] {  0,  1,   0,  0,  0},
+            new float[] {  0,   0,  1,  0,  0},
+            new float[] {  0,   0,   0,  1,  0},
+            new float[] {  0,   0,   0,  0,  0}
+        });
         ColorMatrix invert = new ColorMatrix(new float[][]
         {
             new float[] { -1,   0,   0,  0,  1},
@@ -100,6 +108,11 @@ namespace DONT_DELITE_____.Back
         #endregion
 
         #region effects
+        public Bitmap White(MainWindow mainWindowCls, Bitmap currentPicture)
+        {
+            currentPicture = MatrixConvertBitmap(currentPicture, white);
+            return currentPicture;
+        }
         public Bitmap Invert(MainWindow mainWindowCls, Bitmap currentPicture)
         {
             currentPicture = MatrixConvertBitmap(currentPicture, invert);
