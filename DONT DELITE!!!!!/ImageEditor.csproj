@@ -195,7 +195,6 @@
     <Compile Include="Back\Effects.cs" />
     <Compile Include="Back\FileService.cs" />
     <Compile Include="Back\GaussianBlur.cs" />
-    <Compile Include="Back\GlobalState.cs" />
     <Compile Include="Back\Instruments.cs" />
     <Compile Include="Back\Rotation.cs" />
     <Compile Include="Back\Сorrection.cs" />

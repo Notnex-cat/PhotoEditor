@@ -44,11 +44,6 @@ namespace DONT_DELITE_____
             mcolor.red = 0;
             mcolor.green = 0;
             mcolor.blue = 0;
-            GlobalState.ChangeInstrument += SetCursorStyle;
-            //GlobalState.ChangeColor += SetColorSample;
-
-            GlobalState.Color = Brushes.Black;
-            GlobalState.BrushSize = new Size(7, 3);
         }
 
         #region Clicks
@@ -80,6 +75,10 @@ namespace DONT_DELITE_____
             {
                 MessageBox.Show(except.Message);
             }
+        }
+        private void SavePicture(object sender, RoutedEventArgs e)
+        {
+            SaveCanvas(MainCanvas, 0);
         }
         private void Invert_Click(object sender, RoutedEventArgs e)
         {
@@ -634,8 +633,7 @@ namespace DONT_DELITE_____
                 MessageBox.Show(except.Message);
             }
         }
-        #endregion
-
+        
         private void sld_Color_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             var slider = sender as Slider;
@@ -656,28 +654,6 @@ namespace DONT_DELITE_____
             }
             clr = Color.FromRgb(mcolor.red, mcolor.green, mcolor.blue);
             this.InkCanvas.DefaultDrawingAttributes.Color = clr;
-        }
-
-        private void SetCursorStyle(Object sender, EventArgs e)
-        {
-            switch (GlobalState.CurrentTool)
-            {
-                case Instruments.Brush:
-                    MainCanvas.Cursor = Cursors.Cross;
-                    break;
-                default:
-                    MainCanvas.Cursor = Cursors.Arrow;
-                    break;
-            }
-        }
-
-        private void SavePicture(object sender, RoutedEventArgs e)
-        {
-           
-
-            //Canvas.SetLeft(imgPhoto, -45); //set x coordinate of cat Image to 100
-            //Canvas.SetTop(imgPhoto, -100); //set y coordinate of cat Image to 300
-            SaveCanvas(MainCanvas, 0);
         }
 
         private void SaveCanvas(Canvas canvas, int dpi)
@@ -702,20 +678,10 @@ namespace DONT_DELITE_____
 
         private void SaveAsPng(RenderTargetBitmap bmp)
         {
-            //String filePath = @"E:\SavedImage.jpg";
-            //var enc = new PngBitmapEncoder();
-            //enc.Frames.Add(BitmapFrame.Create(bmp));
-
-            //using (FileStream stm = new FileStream(filePath, FileMode.Create))
-            //{
-                //enc.Save(stm);
-                addPicture(RTBtoB(bmp));
+            addPicture(RTBtoB(bmp));
             this.InkCanvas.Strokes.Clear();
-
-            
-            //}
-
         }
+
         private Bitmap RTBtoB(RenderTargetBitmap bmp)
         {
             MemoryStream stream = new MemoryStream();
@@ -725,5 +691,6 @@ namespace DONT_DELITE_____
             Bitmap bitmap = new Bitmap(stream);
             return bitmap;
         }
+        #endregion
     }
 }
