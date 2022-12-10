@@ -44,15 +44,10 @@ namespace DONT_DELITE_____
         }
 
         #region Clicks
-        private void Open_Click(object sender, RoutedEventArgs e)
+        public void Open_Click(object sender, RoutedEventArgs e)
         {
             FileService fs = new FileService();
             addPicture(fs.OpenPhoto(this));
-
-            FileStream fileStream = new FileStream("E:\\cat.jpg", FileMode.Open, FileAccess.Read);
-            BitmapFrame bitmapFrame = BitmapFrame.Create(fileStream, BitmapCreateOptions.DelayCreation, BitmapCacheOption.None);
-            BitmapMetadata bitmapMetadata = bitmapFrame.Metadata as BitmapMetadata;
-            Console.WriteLine(bitmapMetadata.ToString());
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
@@ -725,11 +720,9 @@ namespace DONT_DELITE_____
         }
 
 
-        public void NewLayer(double PixelHeight, double PixelWidth)
+        public void NewLayer(int PixelWidth, int PixelHeight)
         {
-            RenderTargetBitmap bitmap = new RenderTargetBitmap(300, 400, 96, 96, PixelFormats.Pbgra32);
-            //bitmap.Render(this.imgPhoto);
-            //addPicture();
+            RenderTargetBitmap bitmap = new RenderTargetBitmap(PixelWidth, PixelHeight, 96, 96, PixelFormats.Pbgra32);
             Effects ef = new Effects();
             currentPicture = RTBtoB(bitmap);
             addPicture(ef.Invert(this, currentPicture));
@@ -740,7 +733,7 @@ namespace DONT_DELITE_____
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
-            NewLayer(1.0, 1.0);
+            NewLayer(400, 300);
         }
     }
 }

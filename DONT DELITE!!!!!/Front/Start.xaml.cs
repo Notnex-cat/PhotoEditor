@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DONT_DELITE_____.Front;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,17 +23,24 @@ namespace DONT_DELITE_____
         public Start()
         {
             InitializeComponent();
-            //DataContext = new VM(imgPhoto);
+        }
+        
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Open_Click(sender, e);
+            mainWindow.Show();
+            Close();
         }
 
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    MainWindow mainWindow = new MainWindow();
-        //    
-        //    mainWindow.OpenPhoto();
-        //    mainWindow.Show();
-        //    Close();
-        //}
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            New n = new New();
+            n.Show();
+        }
+        public void CloseW()
+        {
+            Close();
+        }
     }
-    
 }
