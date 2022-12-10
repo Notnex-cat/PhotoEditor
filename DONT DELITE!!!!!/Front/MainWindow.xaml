@@ -6,9 +6,10 @@
         mc:Ignorable="d"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Background="#1f1f1f"
         Title="Фоторедактор" Height="770" Width="1024">
-    <StackPanel Orientation="Vertical" >
-        <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Vertical" Background="Transparent" >
+        <StackPanel Orientation="Horizontal" Background="Transparent">
             <Menu >
                 <MenuItem Name="menuItemFile"
                           Header="Файл" Height="29">
@@ -33,14 +34,14 @@
             </Menu>
 
         </StackPanel>
-        <Grid x:Name="root" Height="96" >
-            <TabControl x:Name="MyTab" SelectionChanged="TabControl_SelectionChanged">
+        <Grid x:Name="root" Height="96" Background="Transparent" >
+            <TabControl Style="{DynamicResource MaterialDesignTabControlBase}" x:Name="MyTab" SelectionChanged="TabControl_SelectionChanged" Background="Transparent">
                 <!--Эффекты-->
-                <TabItem Name="tabResize" Header="Эффекты" Foreground="White">
-                    <StackPanel Background="White" Orientation="Horizontal">
+                <TabItem Name="tabResize"  Header="Эффекты" Foreground="White">
+                    <StackPanel Orientation="Horizontal">
                         <Button x:Name="Gray" Height="36" Content="Серый" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Gray_Click"/>
                         <Button x:Name="Gaus" Height="36" Content="Размытие" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Gaus_Click"/>
-                        <TextBox x:Name="g" materialDesign:HintAssist.Hint="Размытость" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextWrapping="Wrap" Foreground="Black"/>
+                        <TextBox x:Name="g" materialDesign:HintAssist.Hint="Размытость" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextWrapping="Wrap" Foreground="White"/>
                         <Button x:Name="Fog" Height="36" Content="Fog" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Fog_Click"/>
                         <Button x:Name="Flash" Height="36" Content="Flash" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Flash_Click"/>
                         <Button x:Name="Frozen" Height="36" Content="Зима" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Frozen_Click"/>
@@ -54,8 +55,8 @@
                 </TabItem>
 
                 <!--Коррекция-->
-                <TabItem Name="tabCorrection" Header="Коррекция" Foreground="White">
-                    <StackPanel Background="White" Orientation="Horizontal">
+                <TabItem Name="tabCorrection" Header="Коррекция" Foreground="Red">
+                    <StackPanel Background="Transparent" Orientation="Horizontal">
                         <Button x:Name="Otraz" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Click="Otraz_Click">
                             <Image Source="/icons/flipv.png"/>
                         </Button>
@@ -73,8 +74,8 @@
                 </TabItem>
 
                 <!--Фильтр-->
-                <TabItem Name="tabFilter" Header="Фильтр" Foreground="White">
-                    <DockPanel Background="White">
+                <TabItem Name="tabFilter" Header="Фильтр" Foreground="Red">
+                    <DockPanel Background="Transparent">
                         <TextBlock Text="  Насыщенность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
                         <Slider x:Name="SaturSlider" Margin="0,10,0,0" Value="100" Foreground="Cyan" Minimum="-100" Maximum="100" ValueChanged="SaturSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
                         <TextBlock Text="  Прозрачность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
@@ -93,7 +94,7 @@
 
                 <!--Эффекты-->
                 <TabItem Name="tabEffects" Header="Виньетирование" Foreground="White">
-                    <DockPanel Background="White">
+                    <DockPanel Background="Transparent">
                         <Button x:Name="New" Click="New_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="36"/>
 
                     </DockPanel>
@@ -101,7 +102,7 @@
 
                 <!--Рисовать-->
                 <TabItem Name="tabDraw" Header="Рисование" Foreground="White">
-                    <DockPanel Background="White">
+                    <DockPanel Background="Transparent">
                         <Button Click="Pen_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="36">
                             <Image Source="/icons/pen.png" />
                         </Button>
@@ -114,11 +115,11 @@
                 </TabItem>
             </TabControl>
         </Grid>
-        <Grid Margin="18,0,18,18" Height="594">
-            <Canvas Name="MainCanvas" Margin="0,0,0,0" MouseLeftButtonUp="SavePicture">
-                <Image x:Name="imgPhoto" Margin="0,0,0,0"/>
-                <InkCanvas x:Name="InkCanvas" Visibility="Hidden" UseCustomCursor="True" Cursor="Cross" Height="575" Width="978" EditingMode="Ink" ClipToBounds="True" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top"  />
-            </Canvas>
-        </Grid>
+        <Grid Margin="18,0,18,18" Height="594" Background="Transparent">
+            <Canvas Name="MainCanvas" Margin="0,0,0,0" MouseLeftButtonUp="SavePicture" Background="Transparent">
+                    <Image x:Name="imgPhoto" Margin="0,0,0,0"/>
+                    <InkCanvas x:Name="InkCanvas" Visibility="Hidden" UseCustomCursor="True" Cursor="Cross" Height="575" Width="978" EditingMode="Ink" ClipToBounds="True" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top"  />
+                </Canvas>
+            </Grid>
     </StackPanel>
 </Window>

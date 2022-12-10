@@ -9,8 +9,8 @@
         Title="New" Height="240" Width="400">
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="123,45,0,0" TextWrapping="Wrap" Text="Введите ширину и высоту" VerticalAlignment="Top"/>
-        <TextBox x:Name="Width" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Ширина" PreviewTextInput="NumberValidationTextBox" Margin="134,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="Height" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Высота" PreviewTextInput="NumberValidationTextBox" Margin="134,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="Width" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Ширина" PreviewTextInput="NumberValidationTextBox" Margin="134,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="Height" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Высота" PreviewTextInput="NumberValidationTextBox" Margin="134,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="Ok" Content="Ok" HorizontalAlignment="Left" Margin="156,149,0,0" VerticalAlignment="Top" Click="Ok_Click"/>
     </Grid>
 </Window>
