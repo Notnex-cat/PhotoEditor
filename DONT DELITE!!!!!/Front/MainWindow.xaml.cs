@@ -17,9 +17,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Xceed.Wpf.Toolkit;
 using static System.Net.Mime.MediaTypeNames;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
+using MessageBox = System.Windows.MessageBox;
 using Size = System.Windows.Size;
 
 namespace DONT_DELITE_____
@@ -525,6 +527,46 @@ namespace DONT_DELITE_____
         {
             undoPicture();
         }
+        void colorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            InkCanvas.DefaultDrawingAttributes.Color = (Color)colorPicker.SelectedColor;
+        }
+        private void Width_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    InkCanvas.DefaultDrawingAttributes.Width = Width_Slider.Value;
+                }
+                else
+                {
+                    //MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+        private void Height_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            try
+            {
+                if (bitmapList.Count > 0)
+                {
+                    InkCanvas.DefaultDrawingAttributes.Height = Height_Slider.Value;
+                }
+                else
+                {
+                    //MessageBox.Show("Откройте картинку");
+                }
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
         #endregion
 
         #region Functions
@@ -691,6 +733,11 @@ namespace DONT_DELITE_____
             Bitmap bitmap = new Bitmap(stream);
             return bitmap;
         }
+
+
+        
+
+
         #endregion
     }
 }
