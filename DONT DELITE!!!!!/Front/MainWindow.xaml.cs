@@ -661,11 +661,7 @@ namespace DONT_DELITE_____
             {
                 mcolor.blue = Convert.ToByte(value);
             }
-
-            //Задаем значение переменной класса clr 
             clr = Color.FromRgb(mcolor.red, mcolor.green, mcolor.blue);
-            //Устанавливаем фон для контрола Label 
-            // Задаем цвет кисти для контрола InkCanvas
             this.InkCanvas.DefaultDrawingAttributes.Color = clr;
         }
     }
