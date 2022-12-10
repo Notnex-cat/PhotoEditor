@@ -33,19 +33,14 @@ namespace DONT_DELITE_____
     {
         public List<Bitmap> bitmapList = new List<Bitmap>();
         public Bitmap currentPicture;
+        public Bitmap effectsPicture;//костыль для криво работающих эффектов
         private int currentBitmap = 0;
         public Bitmap MWImg;
-        private bool PenVisible = false;
-        public Back.Drawing mcolor { get; set; }
-        public Color clr { get; set; }
+        private bool PenVisible = false; //кнопочка рисовать
 
         public MainWindow()
         {
             InitializeComponent();
-            mcolor = new Back.Drawing();
-            mcolor.red = 0;
-            mcolor.green = 0;
-            mcolor.blue = 0;
         }
 
         #region Clicks
@@ -361,7 +356,7 @@ namespace DONT_DELITE_____
                 if (bitmapList.Count > 0)
                 {
                     Effects ef = new Effects();
-                    addPicture(ef.Sliders(this, bitmapList[0]));
+                    addPicture(ef.Sliders(this, effectsPicture));
                 }
                 else
                 {
@@ -380,7 +375,7 @@ namespace DONT_DELITE_____
                 if (bitmapList.Count > 0)
                 {
                     Effects ef = new Effects();
-                    addPicture(ef.Sliders(this, bitmapList[0]));
+                    addPicture(ef.Sliders(this, effectsPicture));
                 }
                 else
                 {
@@ -399,7 +394,7 @@ namespace DONT_DELITE_____
                 if (bitmapList.Count > 0)
                 {
                     Effects ef = new Effects();
-                    addPicture(ef.Sliders(this, bitmapList[0]));
+                    addPicture(ef.Sliders(this, effectsPicture));
                 }
                 else
                 {
@@ -418,7 +413,7 @@ namespace DONT_DELITE_____
                 if (bitmapList.Count > 0)
                 {
                     Effects ef = new Effects();
-                    addPicture(ef.Sliders(this, bitmapList[0]));
+                    addPicture(ef.Sliders(this, effectsPicture));
                 }
                 else
                 {
@@ -437,7 +432,7 @@ namespace DONT_DELITE_____
                 if (bitmapList.Count > 0)
                 {
                     Effects ef = new Effects();
-                    addPicture(ef.Sliders(this, bitmapList[0]));
+                    addPicture(ef.Sliders(this, effectsPicture));
                 }
                 else
                 {
@@ -456,7 +451,7 @@ namespace DONT_DELITE_____
                 if (bitmapList.Count > 0)
                 {
                     Effects ef = new Effects();
-                    addPicture(ef.Sliders(this, bitmapList[0]));
+                    addPicture(ef.Sliders(this, effectsPicture));
                 }
                 else
                 {
@@ -475,7 +470,7 @@ namespace DONT_DELITE_____
                 if (bitmapList.Count > 0)
                 {
                     Effects ef = new Effects();
-                    addPicture(ef.Sliders(this, bitmapList[0]));
+                    addPicture(ef.Sliders(this, effectsPicture));
                 }
                 else
                 {
@@ -569,7 +564,6 @@ namespace DONT_DELITE_____
         }
         private void Pen_Click(object sender, RoutedEventArgs e)
         {
-            
             if(PenVisible == false)
             {
                 InkCanvas.Visibility = Visibility.Visible;
@@ -688,28 +682,6 @@ namespace DONT_DELITE_____
                 MessageBox.Show(except.Message);
             }
         }
-        
-        private void sld_Color_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            var slider = sender as Slider;
-            string crlName = slider.Name; //Определяем имя контрола, который покрутили
-            double value = slider.Value; // Получаем значение контрола
-                                         //В зависимости от выбранного контрола, меняем ту или иную компоненту и переводим ее в тип byte
-            if (crlName.Equals("sld_RedColor"))
-            {
-                mcolor.red = Convert.ToByte(value);
-            }
-            if (crlName.Equals("sld_GreenColor"))
-            {
-                mcolor.green = Convert.ToByte(value);
-            }
-            if (crlName.Equals("sld_BlueColor"))
-            {
-                mcolor.blue = Convert.ToByte(value);
-            }
-            clr = Color.FromRgb(mcolor.red, mcolor.green, mcolor.blue);
-            this.InkCanvas.DefaultDrawingAttributes.Color = clr;
-        }
 
         private void SaveCanvas(Canvas canvas, int dpi)
         {
@@ -747,8 +719,15 @@ namespace DONT_DELITE_____
             return bitmap;
         }
 
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tabFilter.IsSelected)
+            {
+                effectsPicture = bitmapList[currentBitmap];
+                addPicture(effectsPicture);
+            }
+        }
 
-        
 
 
         #endregion
