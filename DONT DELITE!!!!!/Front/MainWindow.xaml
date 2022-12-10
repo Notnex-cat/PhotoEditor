@@ -32,12 +32,11 @@
             </Menu>
 
         </StackPanel>
-        <Grid x:Name="root" Height="700">
+        <Grid x:Name="root" Height="96" >
             <TabControl>
-
                 <!--Эффекты-->
                 <TabItem Name="tabResize" Header="Эффекты" Foreground="White">
-                    <StackPanel Background="White" Orientation="Horizontal" Margin="0,0,0,284">
+                    <StackPanel Background="White" Orientation="Horizontal">
                         <Button x:Name="Gray" Height="36" Content="Серый" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Gray_Click"/>
                         <Button x:Name="Gaus" Height="36" Content="Размытие" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Gaus_Click"/>
                         <TextBox x:Name="g" materialDesign:HintAssist.Hint="Размытость" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextWrapping="Wrap" Foreground="Black"/>
@@ -55,7 +54,7 @@
 
                 <!--Коррекция-->
                 <TabItem Name="tabCorrection" Header="Коррекция" Foreground="White">
-                    <StackPanel Background="White" Orientation="Horizontal" Margin="0,0,0,284">
+                    <StackPanel Background="White" Orientation="Horizontal">
                         <Button x:Name="Otraz" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Click="Otraz_Click">
                             <Image Source="/icons/flipv.png"/>
                         </Button>
@@ -75,7 +74,7 @@
 
                 <!--Фильтр-->
                 <TabItem Name="tabFilter" Header="Фильтр" Foreground="White">
-                    <DockPanel Background="White" Margin="0,0,0,284">
+                    <DockPanel Background="White">
                         <TextBlock Text="  Насыщенность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
                         <Slider x:Name="SaturSlider" Margin="0,10,0,0" Value="100" Foreground="Cyan" Minimum="-100" Maximum="100" ValueChanged="SaturSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
                         <TextBlock Text="  Прозрачность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
@@ -94,21 +93,24 @@
 
                 <!--Эффекты-->
                 <TabItem Name="tabEffects" Header="Виньетирование" Foreground="White">
-                    <DockPanel Background="White" Margin="0,0,0,284">
-                    
+                    <DockPanel Background="White">
+                        <Button Click="SavePicture" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36"/>
                     </DockPanel>
                 </TabItem>
                 <TabItem Name="tabDraw" Header="Рисование" Foreground="White">
-                    <DockPanel Background="White" Margin="0,0,0,284">
+                    <DockPanel Background="White">
                         <Slider x:Name="sld_RedColor" Foreground="Red" Minimum="0" Maximum="255" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="269" ValueChanged="sld_Color_ValueChanged"/>
                         <Slider x:Name="sld_GreenColor" Foreground="Green" Minimum="0" Maximum="255" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="269" ValueChanged="sld_Color_ValueChanged"/>
                         <Slider x:Name="sld_BlueColor" Foreground="Blue" Minimum="0" Maximum="255" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="269" ValueChanged="sld_Color_ValueChanged"/>
                     </DockPanel>
                 </TabItem>
             </TabControl>
-            
-            <Image Margin="18,106,18,18" x:Name="imgPhoto" MouseLeftButtonDown="Image_MouseLeftButtonDown_1"/>
-            <InkCanvas x:Name="InkCanvas" EditingMode="Ink" ClipToBounds="True" Background="Transparent" Margin="18,106,18,18"/>
+        </Grid>
+        <Grid Margin="18,0,18,18">
+            <Canvas Name="MainCanvas" MouseLeftButtonUp="SavePicture" Background="Transparent">
+                <Image x:Name="imgPhoto" Stretch="Fill" Height="Auto" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                <InkCanvas x:Name="InkCanvas" Width="988" Height="574" EditingMode="Ink" ClipToBounds="True" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            </Canvas>
         </Grid>
     </StackPanel>
 </Window>

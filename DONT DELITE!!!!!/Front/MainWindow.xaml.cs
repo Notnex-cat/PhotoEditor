@@ -9,6 +9,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Pipes;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -16,7 +18,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static System.Net.Mime.MediaTypeNames;
+using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
+using Size = System.Windows.Size;
 
 namespace DONT_DELITE_____
 {
@@ -32,7 +36,7 @@ namespace DONT_DELITE_____
 
         public Back.Drawing mcolor { get; set; }
         public Color clr { get; set; }
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -40,7 +44,11 @@ namespace DONT_DELITE_____
             mcolor.red = 0;
             mcolor.green = 0;
             mcolor.blue = 0;
-            //DataContext = new VM(imgPhoto);
+            GlobalState.ChangeInstrument += SetCursorStyle;
+            //GlobalState.ChangeColor += SetColorSample;
+
+            GlobalState.Color = Brushes.Black;
+            GlobalState.BrushSize = new Size(7, 3);
         }
 
         #region Clicks
@@ -627,21 +635,6 @@ namespace DONT_DELITE_____
             }
         }
         #endregion
-        private void Image_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
-        {
-            Ellipse ellipse = new Ellipse();
-            ellipse.Fill = System.Windows.Media.Brushes.Sienna;
-            ellipse.Width = 100;
-            ellipse.Height = 100;
-            ellipse.StrokeThickness = 2;
-
-            InkCanvas.Children.Add(ellipse);
-
-            Canvas.SetLeft(ellipse, e.GetPosition(imgPhoto).X);
-            Canvas.SetTop(ellipse, e.GetPosition(imgPhoto).Y);
-            Console.WriteLine("yytouiy");
-        }
-
 
         private void sld_Color_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -663,6 +656,74 @@ namespace DONT_DELITE_____
             }
             clr = Color.FromRgb(mcolor.red, mcolor.green, mcolor.blue);
             this.InkCanvas.DefaultDrawingAttributes.Color = clr;
+        }
+
+        private void SetCursorStyle(Object sender, EventArgs e)
+        {
+            switch (GlobalState.CurrentTool)
+            {
+                case Instruments.Brush:
+                    MainCanvas.Cursor = Cursors.Cross;
+                    break;
+                default:
+                    MainCanvas.Cursor = Cursors.Arrow;
+                    break;
+            }
+        }
+
+        private void SavePicture(object sender, RoutedEventArgs e)
+        {
+           
+
+            //Canvas.SetLeft(imgPhoto, -45); //set x coordinate of cat Image to 100
+            //Canvas.SetTop(imgPhoto, -100); //set y coordinate of cat Image to 300
+            SaveCanvas(MainCanvas, 0);
+        }
+
+        private void SaveCanvas(Canvas canvas, int dpi)
+        {
+            var width = bitmapList[currentBitmap].Width;
+            var height = bitmapList[currentBitmap].Height;
+
+            var size = new Size(width, height);
+            canvas.Measure(size);
+
+            var rtb = new RenderTargetBitmap(
+                (int)width,
+                (int)height,
+                dpi, //dpi x 
+                dpi, //dpi y 
+                PixelFormats.Pbgra32 // pixelformat 
+                );
+            rtb.Render(canvas);
+
+            SaveAsPng(rtb);
+        }
+
+        private void SaveAsPng(RenderTargetBitmap bmp)
+        {
+            //String filePath = @"E:\SavedImage.jpg";
+            //var enc = new PngBitmapEncoder();
+            //enc.Frames.Add(BitmapFrame.Create(bmp));
+
+            //using (FileStream stm = new FileStream(filePath, FileMode.Create))
+            //{
+                //enc.Save(stm);
+                addPicture(RTBtoB(bmp));
+            this.InkCanvas.Strokes.Clear();
+
+            
+            //}
+
+        }
+        private Bitmap RTBtoB(RenderTargetBitmap bmp)
+        {
+            MemoryStream stream = new MemoryStream();
+            BitmapEncoder encoder = new BmpBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bmp));
+            encoder.Save(stream);
+            Bitmap bitmap = new Bitmap(stream);
+            return bitmap;
         }
     }
 }
