@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.IO.Pipes;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +15,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
+using Color = System.Windows.Media.Color;
 
 namespace DONT_DELITE_____
 {
@@ -24,13 +27,19 @@ namespace DONT_DELITE_____
     {
         public List<Bitmap> bitmapList = new List<Bitmap>();
         public Bitmap currentPicture;
-        string way;
         private int currentBitmap = 0;
         public Bitmap MWImg;
+
+        public Back.Drawing mcolor { get; set; }
+        public Color clr { get; set; }
         
         public MainWindow()
         {
             InitializeComponent();
+            mcolor = new Back.Drawing();
+            mcolor.red = 0;
+            mcolor.green = 0;
+            mcolor.blue = 0;
             //DataContext = new VM(imgPhoto);
         }
 
@@ -39,6 +48,11 @@ namespace DONT_DELITE_____
         {
             FileService fs = new FileService();
             addPicture(fs.OpenPhoto(this));
+
+            FileStream fileStream = new FileStream("E:\\cat.jpg", FileMode.Open, FileAccess.Read);
+            BitmapFrame bitmapFrame = BitmapFrame.Create(fileStream, BitmapCreateOptions.DelayCreation, BitmapCacheOption.None);
+            BitmapMetadata bitmapMetadata = bitmapFrame.Metadata as BitmapMetadata;
+            Console.WriteLine(bitmapMetadata.ToString());
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
@@ -128,8 +142,8 @@ namespace DONT_DELITE_____
                 if (bitmapList.Count > 0)
                 {
                     Effects ef = new Effects();
-            currentPicture = bitmapList[currentBitmap];
-            addPicture(ef.Fog(this, currentPicture));
+                    currentPicture = bitmapList[currentBitmap];
+                    addPicture(ef.Fog(this, currentPicture));
                 }
                 else
                 {
@@ -626,6 +640,33 @@ namespace DONT_DELITE_____
             Canvas.SetLeft(ellipse, e.GetPosition(imgPhoto).X);
             Canvas.SetTop(ellipse, e.GetPosition(imgPhoto).Y);
             Console.WriteLine("yytouiy");
+        }
+
+
+        private void sld_Color_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            var slider = sender as Slider;
+            string crlName = slider.Name; //Определяем имя контрола, который покрутили
+            double value = slider.Value; // Получаем значение контрола
+                                         //В зависимости от выбранного контрола, меняем ту или иную компоненту и переводим ее в тип byte
+            if (crlName.Equals("sld_RedColor"))
+            {
+                mcolor.red = Convert.ToByte(value);
+            }
+            if (crlName.Equals("sld_GreenColor"))
+            {
+                mcolor.green = Convert.ToByte(value);
+            }
+            if (crlName.Equals("sld_BlueColor"))
+            {
+                mcolor.blue = Convert.ToByte(value);
+            }
+
+            //Задаем значение переменной класса clr 
+            clr = Color.FromRgb(mcolor.red, mcolor.green, mcolor.blue);
+            //Устанавливаем фон для контрола Label 
+            // Задаем цвет кисти для контрола InkCanvas
+            this.InkCanvas.DefaultDrawingAttributes.Color = clr;
         }
     }
 }

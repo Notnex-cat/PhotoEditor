@@ -110,7 +110,6 @@ namespace DONT_DELITE_____.Back
             currentPicture = MatrixConvertBitmap(currentPicture, gray);
             return currentPicture;
         }
-        
         public Bitmap Fog(MainWindow mainWindowCls, Bitmap currentPicture)
         {
             currentPicture = MatrixConvertBitmap(currentPicture, fog);

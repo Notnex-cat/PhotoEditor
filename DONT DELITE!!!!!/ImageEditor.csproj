@@ -191,6 +191,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Back\Crop.cs" />
+    <Compile Include="Back\Drawing.cs" />
     <Compile Include="Back\Effects.cs" />
     <Compile Include="Back\FileService.cs" />
     <Compile Include="Back\GaussianBlur.cs" />

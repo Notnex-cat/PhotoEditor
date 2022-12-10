@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+﻿ using Microsoft.Win32;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -14,9 +14,6 @@ namespace DONT_DELITE_____.Back
 {
     public class FileService
     {
-        /// <summary>
-        /// Добавление картинки на Image
-        /// </summary>
         MainWindow mw = new MainWindow();
         private Bitmap currentPicture;
 
@@ -35,7 +32,6 @@ namespace DONT_DELITE_____.Back
             }
             return currentPicture;
         }
-
         public void SavePhoto(MainWindow mainWibdowCls, Bitmap currentPicture)
         {
             SaveFileDialog save = new SaveFileDialog();

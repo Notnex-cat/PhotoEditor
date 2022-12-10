@@ -16,8 +16,7 @@ namespace DONT_DELITE_____.Back
         private readonly int[] _blue;
         private readonly int _width;
         private readonly int _height;
-        private readonly ParallelOptions _pOptions =
-            new ParallelOptions { MaxDegreeOfParallelism = 16 };
+        private readonly ParallelOptions _pOptions = new ParallelOptions { MaxDegreeOfParallelism = 16 };
 
         public GaussianBlur(MainWindow mainWindowCls,  Bitmap image)
         {
