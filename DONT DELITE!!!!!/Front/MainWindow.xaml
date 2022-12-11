@@ -6,10 +6,10 @@
         mc:Ignorable="d"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Background="#1f1f1f"
+        Background="White"
         Title="Фоторедактор" Height="770" Width="1024">
     <StackPanel Orientation="Vertical" Background="Transparent" >
-        <StackPanel Orientation="Horizontal" Background="Transparent">
+        <StackPanel Orientation="Horizontal" Background="White">
             <Menu >
                 <MenuItem Name="menuItemFile"
                           Header="Файл" Height="29">
@@ -34,8 +34,9 @@
             </Menu>
 
         </StackPanel>
-        <Grid x:Name="root" Height="96" Background="Transparent" >
-            <TabControl Style="{DynamicResource MaterialDesignTabControlBase}" x:Name="MyTab" SelectionChanged="TabControl_SelectionChanged" Background="Transparent">
+        <Grid x:Name="root" Height="96" Background="White"  >
+
+            <TabControl Style="{DynamicResource MaterialDesignTabControlBase}" x:Name="MyTab" SelectionChanged="TabControl_SelectionChanged" Background="#131313">
                 <!--Эффекты-->
                 <TabItem Name="tabResize"  Header="Эффекты" Foreground="White">
                     <StackPanel Orientation="Horizontal">
@@ -115,11 +116,30 @@
                 </TabItem>
             </TabControl>
         </Grid>
-        <Grid Margin="18,0,18,18" Height="594" Background="Transparent">
-            <Canvas Name="MainCanvas" Margin="0,0,0,0" MouseLeftButtonUp="SavePicture" Background="Transparent">
+       
+        
+            <Border x:Name="BorderButton"
+                        CornerRadius="3.5"
+                        BorderBrush="{StaticResource PrimaryHueDarkBrush}"
+                        
+                        Padding="15 7 15 6"><!--Background="{StaticResource PrimaryHueLightBrush}"-->
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="2"
+                                              ShadowDepth="1"
+                                              Direction="270"
+                                              Color="Black"
+                                              Opacity="0.8" />
+                </Border.Effect>
+                <Grid Margin="18,0,18,18" Height="596" Background="Transparent">
+                <Canvas Name="MainCanvas" Margin="0,0,0,0" MouseLeftButtonUp="SavePicture" Background="Transparent">
+
                     <Image x:Name="imgPhoto" Margin="0,0,0,0"/>
+
                     <InkCanvas x:Name="InkCanvas" Visibility="Hidden" UseCustomCursor="True" Cursor="Cross" Height="575" Width="978" EditingMode="Ink" ClipToBounds="True" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top"  />
                 </Canvas>
             </Grid>
+            </Border>
+        
+        
     </StackPanel>
 </Window>
