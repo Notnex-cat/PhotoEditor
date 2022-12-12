@@ -124,11 +124,12 @@
                             
                             <!--Number of steps in the blend-->
                             <Slider x:Name="sliderSteps" Width="140" Height="30" Margin="10, 0, 10, 0" Minimum="4" Maximum="100" Value="40" TickFrequency="10" TickPlacement="TopLeft" ValueChanged="sliderSteps_ValueChanged"/>
+                            <ComboBox x:Name="XY" Margin="5, 0, 5, 5" Width="120" SelectionChanged="comboTechnique_SelectionChanged">
 
-                            <Slider x:Name="sliderOriginX" Width="140" Height="30" Margin="10, 0, 10, 0" Minimum="-100" Maximum="100" Value="0" TickFrequency="20" TickPlacement="TopLeft" ValueChanged="sliderOriginX_ValueChanged"/>
+                                <Slider x:Name="sliderOriginX" Width="140" Height="30" Margin="10, 0, 10, 0" Minimum="-100" Maximum="100" Value="0" TickFrequency="20" TickPlacement="TopLeft" ValueChanged="sliderOriginX_ValueChanged"/>
 
-                            <Slider x:Name="sliderOriginY" Width="140" Height="30" Margin="10, 0, 10, 0" Minimum="-100" Maximum="100" Value="0" TickFrequency="20" TickPlacement="TopLeft" ValueChanged="sliderOriginY_ValueChanged"/>
-
+                                <Slider x:Name="sliderOriginY" Width="140" Height="30" Margin="10, 0, 10, 0" Minimum="-100" Maximum="100" Value="0" TickFrequency="20" TickPlacement="TopLeft" ValueChanged="sliderOriginY_ValueChanged"/>
+                            </ComboBox>
                             <xctk:ColorPicker Name="colorPickerV" materialDesign:ColorZoneAssist.Background="White" Width="140" HorizontalAlignment="Left" SelectedColorChanged="colorPickerV_SelectedColorChanged" />
 
 

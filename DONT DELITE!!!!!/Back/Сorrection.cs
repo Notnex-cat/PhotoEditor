@@ -299,7 +299,7 @@ namespace DONT_DELITE_____.Back
         /// </summary>
         private void ApplyVignette(MainWindow mainWindowCls, Bitmap currentPicture)
         {
-            vignette = new VignetteEffect(this);
+            //vignette = new VignetteEffect(this);
             vignette.Angle = mainWindowCls.sliderAngle.Value;
             vignette.Coverage = mainWindowCls.sliderPercent.Value;
             vignette.BandPixels = Convert.ToInt32(mainWindowCls.sliderBand.Value);

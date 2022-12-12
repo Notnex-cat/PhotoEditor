@@ -60,9 +60,9 @@ namespace DONT_DELITE_____.Back
         int height;                  // Height of image.
         double geometryFactor;       // See note below, in the constructor.
         ModeOfOperation mode;        // Either display mode or save mode.        
-        Сorrection mainWin;          // Main Window object.
+        MainWindow mainWin;          // Main Window object.
 
-        public VignetteEffect(Сorrection main)
+        public VignetteEffect(MainWindow main)
         {
             pixRedOrig = new List<byte>();
             pixGreenOrig = new List<byte>();
@@ -180,10 +180,11 @@ namespace DONT_DELITE_____.Back
 
             if (mode == ModeOfOperation.DisplayMode) // Send back the pixels to display the image.
             {                
-                mainWin.UpdateImage(ref pixRedModified, ref pixGreenModified, ref pixBlueModified, mainWindowCls);
+                mainWin.UpdateImage(ref pixRedModified, ref pixGreenModified, ref pixBlueModified);
             }
             else // if (mode == ModeOfOperation.SaveMode) // Save the image onto the specified file.
             {
+
                 SaveImage();
             }
         }
@@ -479,7 +480,7 @@ namespace DONT_DELITE_____.Back
         /// <summary>
         /// Function to save the modified image onto a file
         /// </summary>
-        private void SaveImage()
+        public void SaveImage()
         {
             // First, create the image to be saved
             int bitsPerPixel = 24, i1;

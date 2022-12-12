@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Pipes;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
@@ -41,9 +42,75 @@ namespace DONT_DELITE_____
         VignetteShape shape;
         Color colour;
 
+        // Lists of red, green and blue pixels in original image (unscaled).
+        List<byte> pixels8Red;
+        List<byte> pixels8Green;
+        List<byte> pixels8Blue;
+
+        // Lists of red, green and blue pixels in modified image (unscaled).
+        List<byte> pixels8RedModified;
+        List<byte> pixels8GreenModified;
+        List<byte> pixels8BlueModified;
+
+        // Lists of red, green and blue pixels in original image (scaled).
+        List<byte> pixels8RedScaled;
+        List<byte> pixels8GreenScaled;
+        List<byte> pixels8BlueScaled;
+
+        // Lists of red, green and blue pixels in modified image (scaled).
+        List<byte> pixels8RedScaledModified;
+        List<byte> pixels8GreenScaledModified;
+        List<byte> pixels8BlueScaledModified;
+
+        BitmapSource originalImage;      // Bitmap for the original image.
+        BitmapSource newImage;           // Bitmap for the scaled image.
+        TransformedBitmap scaledImage;   // Bitmap for the scaled image.
+
+        // Tried to use a List<byte> for this, but found that BitmapSource.CopyPixels does not take 
+        // this data type as one of its arguments.
+        byte[] originalPixels;
+        byte[] scaledPixels;
+
+        int originalWidth, originalHeight;
+        int viewportWidthHeight = 600;
+        int scaledWidth;
+        int scaledHeight;
+        string fileName;
+
+        byte red, green, blue;
+        double scaleFactor;
+
         public MainWindow()
         {
             InitializeComponent();
+            pixels8Red = new List<byte>();
+            pixels8Green = new List<byte>();
+            pixels8Blue = new List<byte>();
+
+            pixels8RedModified = new List<byte>();
+            pixels8GreenModified = new List<byte>();
+            pixels8BlueModified = new List<byte>();
+
+            pixels8RedScaled = new List<byte>();
+            pixels8GreenScaled = new List<byte>();
+            pixels8BlueScaled = new List<byte>();
+
+            pixels8RedScaledModified = new List<byte>();
+            pixels8GreenScaledModified = new List<byte>();
+            pixels8BlueScaledModified = new List<byte>();
+
+            scaleFactor = 1.0;
+
+            // Magic numbers to represent the starting colour - predominantly blue
+            red = 20;
+            green = 20;
+            blue = 240;
+            colour = new Color();
+            colour = Color.FromRgb(red, green, blue);
+            
+
+            comboTechnique.SelectedIndex = 1; // Select the ellipse shape
+            vignette = null;
         }
 
         #region Clicks
@@ -595,7 +662,11 @@ namespace DONT_DELITE_____
             }
             if (tabVignette.IsSelected)
             {
-                
+                ReadImage();
+                ComputeScaledWidthAndHeight();
+                ScaleImage();
+                PopulatePixelsOriginalAndScaled();
+                ApplyVignette();
             }
         }
         //private void RedSliderVignette_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -899,8 +970,217 @@ namespace DONT_DELITE_____
 
         private void applyV_Click(object sender, RoutedEventArgs e)
         {
-            Сorrection cor = new Сorrection();
-            addPicture(cor.bnOpen(this, currentPicture));
+            VignetteEffect vig = new VignetteEffect(this);
+            vig.Angle = sliderAngle.Value;
+            vig.Coverage = sliderPercent.Value;
+
+            vig.BandPixels = Convert.ToInt32(sliderBand.Value / scaleFactor);
+            vig.NumberSteps = Convert.ToInt32(sliderSteps.Value / scaleFactor);
+            vig.Xcentre = Convert.ToInt32(sliderOriginX.Value);
+            vig.Ycentre = Convert.ToInt32(sliderOriginY.Value);
+            vig.BorderColour = colour;
+            vig.Shape = shape;
+
+            Mouse.OverrideCursor = Cursors.Wait;
+            vig.TransferImagePixels(ref pixels8Red, ref pixels8Green, ref pixels8Blue,
+                    originalWidth, originalHeight,
+                    ref pixels8RedModified, ref pixels8GreenModified, ref pixels8BlueModified,
+                    ModeOfOperation.SaveMode);
+            vig.SaveImage();
+            
+        }
+
+        void ScaleImage()
+        {
+            double fac1 = Convert.ToDouble(scaledWidth / (1.0 * originalWidth));
+            double fac2 = Convert.ToDouble(scaledHeight / (1.0 * originalHeight));
+            scaleFactor = Math.Min(fac1, fac2);
+            var scale = new ScaleTransform(fac1, fac2);
+            scaledImage = new TransformedBitmap(originalImage, scale);
+
+            imgPhoto.Source = scaledImage;
+
+            int stride = (scaledImage.PixelWidth * scaledImage.Format.BitsPerPixel + 7) / 8;
+            scaledPixels = new byte[stride * scaledHeight];
+
+            // Update the array scaledPixels from the scaled image
+            scaledImage.CopyPixels(Int32Rect.Empty, scaledPixels, stride, 0);
+        }
+        private bool ReadImage()
+        {
+            bool retVal = false;
+            // Open the image
+            originalImage = BitmapToBitmapSource(bitmapList[currentBitmap]);
+            int stride = (originalImage.PixelWidth * originalImage.Format.BitsPerPixel + 7) / 8;
+            originalWidth = originalImage.PixelWidth;
+            originalHeight = originalImage.PixelHeight;
+
+            if ((originalImage.Format == PixelFormats.Bgra32) ||
+                (originalImage.Format == PixelFormats.Bgr32))
+            {
+                originalPixels = new byte[stride * originalHeight];
+                // Read in pixel values from the image
+                originalImage.CopyPixels(Int32Rect.Empty, originalPixels, stride, 0);
+                
+                retVal = true;
+            }
+            else
+            {
+                MessageBox.Show("Sorry, I don't support this image format.");
+            }
+
+            return retVal;
+        }
+
+        private void ComputeScaledWidthAndHeight()
+        {
+            if (originalWidth > originalHeight)
+            {
+                scaledWidth = viewportWidthHeight;
+                scaledHeight = originalHeight * viewportWidthHeight / originalWidth;
+            }
+            else
+            {
+                scaledHeight = viewportWidthHeight;
+                scaledWidth = originalWidth * viewportWidthHeight / originalHeight;
+            }
+        }
+        private void PopulatePixelsOriginalAndScaled()
+        {
+            int bitsPerPixel = originalImage.Format.BitsPerPixel;
+
+            if (bitsPerPixel == 24 || bitsPerPixel == 32)
+            {
+                byte red, green, blue;
+
+                pixels8Red.Clear();
+                pixels8Green.Clear();
+                pixels8Blue.Clear();
+
+                pixels8RedModified.Clear();
+                pixels8GreenModified.Clear();
+                pixels8BlueModified.Clear();
+
+                pixels8RedScaled.Clear();
+                pixels8GreenScaled.Clear();
+                pixels8BlueScaled.Clear();
+
+                pixels8RedScaledModified.Clear();
+                pixels8GreenScaledModified.Clear();
+                pixels8BlueScaledModified.Clear();
+
+                // Populate the Red, Green and Blue lists.
+                if (bitsPerPixel == 24) // 24 bits per pixel
+                {
+                    for (int i = 0; i < scaledPixels.Count(); i += 3)
+                    {
+                        // In a 24-bit per pixel image, the bytes are stored in the order 
+                        // BGR - Blue Green Red order.
+                        blue = (byte)(scaledPixels[i]);
+                        green = (byte)(scaledPixels[i + 1]);
+                        red = (byte)(scaledPixels[i + 2]);
+
+                        pixels8RedScaled.Add(red);
+                        pixels8GreenScaled.Add(green);
+                        pixels8BlueScaled.Add(blue);
+
+                        pixels8RedScaledModified.Add(red);
+                        pixels8GreenScaledModified.Add(green);
+                        pixels8BlueScaledModified.Add(blue);
+                    }
+
+                    for (int i = 0; i < originalPixels.Count(); i += 3)
+                    {
+                        // In a 24-bit per pixel image, the bytes are stored in the order 
+                        // BGR - Blue Green Red order.
+                        blue = (byte)(originalPixels[i]);
+                        green = (byte)(originalPixels[i + 1]);
+                        red = (byte)(originalPixels[i + 2]);
+
+                        pixels8Red.Add(red);
+                        pixels8Green.Add(green);
+                        pixels8Blue.Add(blue);
+
+                        pixels8RedModified.Add(red);
+                        pixels8GreenModified.Add(green);
+                        pixels8BlueModified.Add(blue);
+                    }
+                }
+                if (bitsPerPixel == 32) // 32 bits per pixel
+                {
+                    for (int i = 0; i < scaledPixels.Count(); i += 4)
+                    {
+                        // In a 32-bit per pixel image, the bytes are stored in the order 
+                        // BGR - Blue Green Red Alpha order.
+                        blue = (byte)(scaledPixels[i]);
+                        green = (byte)(scaledPixels[i + 1]);
+                        red = (byte)(scaledPixels[i + 2]);
+
+                        pixels8RedScaled.Add(red);
+                        pixels8GreenScaled.Add(green);
+                        pixels8BlueScaled.Add(blue);
+
+                        pixels8RedScaledModified.Add(red);
+                        pixels8GreenScaledModified.Add(green);
+                        pixels8BlueScaledModified.Add(blue);
+                    }
+
+                    for (int i = 0; i < originalPixels.Count(); i += 4)
+                    {
+                        // In a 32-bit per pixel image, the bytes are stored in the order 
+                        // BGR - Blue Green Red Alpha order.
+                        blue = (byte)(originalPixels[i]);
+                        green = (byte)(originalPixels[i + 1]);
+                        red = (byte)(originalPixels[i + 2]);
+
+                        pixels8Red.Add(red);
+                        pixels8Green.Add(green);
+                        pixels8Blue.Add(blue);
+
+                        pixels8RedModified.Add(red);
+                        pixels8GreenModified.Add(green);
+                        pixels8BlueModified.Add(blue);
+                    }
+                }
+            }
+        }
+        private void ApplyVignette()
+        {
+            vignette = new VignetteEffect(this);
+            vignette.Angle = sliderAngle.Value;
+            vignette.Coverage = sliderPercent.Value;
+            vignette.BandPixels = Convert.ToInt32(sliderBand.Value);
+            vignette.NumberSteps = Convert.ToInt32(sliderSteps.Value);
+            vignette.Xcentre = Convert.ToInt32(sliderOriginX.Value);
+            vignette.Ycentre = Convert.ToInt32(sliderOriginY.Value);
+            vignette.BorderColour = colour;
+            vignette.Shape = shape;
+            vignette.TransferImagePixels(ref pixels8RedScaled, ref pixels8GreenScaled, ref pixels8BlueScaled,
+                    scaledWidth, scaledHeight,
+                    ref pixels8RedScaledModified, ref pixels8GreenScaledModified, ref pixels8BlueScaledModified,
+                    ModeOfOperation.DisplayMode);
+            //vignette.ApplyEffect();
+        }
+        public void UpdateImage(ref List<byte> pixels8RedScaledModified,
+            ref List<byte> pixels8GreenScaledModified,
+            ref List<byte> pixels8BlueScaledModified)
+        {
+            int bitsPerPixel = 24;
+            int stride = (scaledWidth * bitsPerPixel + 7) / 8;
+            byte[] pixelsToWrite = new byte[stride * scaledHeight];
+            int i1;
+
+            for (int i = 0; i < pixelsToWrite.Count(); i += 3)
+            {
+                i1 = i / 3;
+                pixelsToWrite[i] = pixels8RedScaledModified[i1];
+                pixelsToWrite[i + 1] = pixels8GreenScaledModified[i1];
+                pixelsToWrite[i + 2] = pixels8BlueScaledModified[i1];
+            }
+
+            newImage = BitmapSource.Create(scaledWidth, scaledHeight, 96, 96, PixelFormats.Rgb24,
+                null, pixelsToWrite, stride);
+            imgPhoto.Source = newImage;
         }
         
     }
