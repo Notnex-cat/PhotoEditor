@@ -532,7 +532,7 @@ namespace DONT_DELITE_____
                 if (vignette != null)
                 {
                     vignette.BorderColour = colour;
-                    vignette.ApplyEffect();
+                    vignette.ApplyEffect(this);
                 }
             
         }
@@ -687,7 +687,7 @@ namespace DONT_DELITE_____
             if (vignette != null)
             {
                 vignette.Shape = shape;
-                vignette.ApplyEffect();
+                vignette.ApplyEffect(this);
             }
         }
 
@@ -696,7 +696,7 @@ namespace DONT_DELITE_____
             if (vignette != null)
             {
                 vignette.Angle = sliderAngle.Value;
-                vignette.ApplyEffect();
+                vignette.ApplyEffect(this);
             }
         }
 
@@ -705,7 +705,7 @@ namespace DONT_DELITE_____
             if (vignette != null)
             {
                 vignette.Coverage = sliderPercent.Value;
-                vignette.ApplyEffect();
+                vignette.ApplyEffect(this);
             }
         }
 
@@ -714,7 +714,7 @@ namespace DONT_DELITE_____
             if (vignette != null)
             {
                 vignette.BandPixels = Convert.ToInt32(sliderBand.Value);
-                vignette.ApplyEffect();
+                vignette.ApplyEffect(this);
             }
         }
 
@@ -723,7 +723,7 @@ namespace DONT_DELITE_____
             if (vignette != null)
             {
                 vignette.Xcentre = Convert.ToInt32(sliderOriginX.Value);
-                vignette.ApplyEffect();
+                vignette.ApplyEffect(this);
             }
         }
 
@@ -732,7 +732,7 @@ namespace DONT_DELITE_____
             if (vignette != null)
             {
                 vignette.Ycentre = Convert.ToInt32(sliderOriginY.Value);
-                vignette.ApplyEffect();
+                vignette.ApplyEffect(this);
             }
         }
 
@@ -741,7 +741,7 @@ namespace DONT_DELITE_____
             if (vignette != null)
             {
                 vignette.NumberSteps = Convert.ToInt32(sliderSteps.Value);
-                vignette.ApplyEffect();
+                vignette.ApplyEffect(this);
             }
         }
         #endregion

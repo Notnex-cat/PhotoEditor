@@ -59,7 +59,7 @@ namespace DONT_DELITE_____.Back
         System.Windows.Media.Color colour;              // Border colour
         byte red, green, blue;
         double scaleFactor;
-        MainWindow mainWindowCls;
+        
 
         public Сorrection()
         {
@@ -95,20 +95,18 @@ namespace DONT_DELITE_____.Back
         /// <summary>
         /// Method to read in an image.
         /// </summary>
-        private bool ReadImage(string fn, string fileNameOnly)
+        private bool ReadImage(MainWindow mainWindowCls)
         {
             bool retVal = false;
-            // Open the image
-            Uri imageUri = new Uri(fn, UriKind.RelativeOrAbsolute);
-            originalImage = BitmapToBitmapSource(mainWindowCls.currentPicture);
+            originalImage = BitmapToBitmapSource(mainWindowCls.bitmapList[mainWindowCls.currentBitmap]);
             int stride = (BitmapToBitmapSource(mainWindowCls.bitmapList[mainWindowCls.currentBitmap]).PixelWidth * originalImage.Format.BitsPerPixel + 7) / 8;
-            originalWidth = 400;//mainWindowCls.bitmapList[mainWindowCls.currentBitmap].Width;
-            originalHeight = 500;// mainWindowCls.bitmapList[mainWindowCls.currentBitmap].Height;
+            originalWidth = originalImage.PixelWidth;//mainWindowCls.bitmapList[mainWindowCls.currentBitmap].Width;
+            originalHeight = originalImage.PixelHeight;// mainWindowCls.bitmapList[mainWindowCls.currentBitmap].Height;
 
             if ((originalImage.Format == PixelFormats.Bgra32) ||
                 (originalImage.Format == PixelFormats.Bgr32))
             {
-                originalPixels = new byte[4000000];
+                originalPixels = new byte[stride * originalHeight];
                 // Read in pixel values from the image
                 originalImage.CopyPixels(Int32Rect.Empty, originalPixels, stride, 0);
                 retVal = true;
@@ -188,7 +186,7 @@ namespace DONT_DELITE_____.Back
         /// </summary>
         private void PopulatePixelsOriginalAndScaled(MainWindow mainWindowCls)
         {
-            int bitsPerPixel = BitmapToBitmapSource(mainWindowCls.bitmapList[mainWindowCls.currentBitmap]).Format.BitsPerPixel;
+            int bitsPerPixel = originalImage.Format.BitsPerPixel;
 
             if (bitsPerPixel == 24 || bitsPerPixel == 32)
             {
@@ -288,6 +286,7 @@ namespace DONT_DELITE_____.Back
 
         public Bitmap bnOpen(MainWindow mainWindowCls, Bitmap currentPicture)
         {
+            ReadImage(mainWindowCls);
             ComputeScaledWidthAndHeight();
             ScaleImage(mainWindowCls, currentPicture);
             PopulatePixelsOriginalAndScaled(mainWindowCls);
@@ -313,7 +312,7 @@ namespace DONT_DELITE_____.Back
                     scaledWidth, scaledHeight,
                     ref pixels8RedScaledModified, ref pixels8GreenScaledModified, ref pixels8BlueScaledModified,
                     ModeOfOperation.DisplayMode);
-            vignette.ApplyEffect();
+           vignette.ApplyEffect(mainWindowCls);
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace DONT_DELITE_____.Back
         /// </summary>
         public void UpdateImage(ref List<byte> pixels8RedScaledModified,
             ref List<byte> pixels8GreenScaledModified,
-            ref List<byte> pixels8BlueScaledModified)
+            ref List<byte> pixels8BlueScaledModified, MainWindow mainWindowCls)
         {
             int bitsPerPixel = 24;
             int stride = (scaledWidth * bitsPerPixel + 7) / 8;

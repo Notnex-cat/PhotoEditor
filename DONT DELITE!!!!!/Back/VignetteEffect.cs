@@ -169,7 +169,7 @@ namespace DONT_DELITE_____.Back
         /// <summary>
         /// Method to apply the vignette.
         /// </summary>
-        public void ApplyEffect()
+        public void ApplyEffect(MainWindow mainWindowCls)
         {
             SetupParameters();
             if (Shape == VignetteShape.Circle || Shape == VignetteShape.Ellipse ||
@@ -180,7 +180,7 @@ namespace DONT_DELITE_____.Back
 
             if (mode == ModeOfOperation.DisplayMode) // Send back the pixels to display the image.
             {                
-                mainWin.UpdateImage(ref pixRedModified, ref pixGreenModified, ref pixBlueModified);
+                mainWin.UpdateImage(ref pixRedModified, ref pixGreenModified, ref pixBlueModified, mainWindowCls);
             }
             else // if (mode == ModeOfOperation.SaveMode) // Save the image onto the specified file.
             {
