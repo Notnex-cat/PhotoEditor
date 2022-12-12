@@ -191,11 +191,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Back\Crop.cs" />
-    <Compile Include="Back\Drawing.cs" />
     <Compile Include="Back\Effects.cs" />
     <Compile Include="Back\FileService.cs" />
     <Compile Include="Back\GaussianBlur.cs" />
     <Compile Include="Back\Rotation.cs" />
+    <Compile Include="Back\VignetteEffect.cs" />
     <Compile Include="Back\Сorrection.cs" />
     <Compile Include="Front\New.xaml.cs">
       <DependentUpon>New.xaml</DependentUpon>
@@ -275,6 +275,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icons\pen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\cursor.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Text.Json.6.0.6\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.6\build\System.Text.Json.targets')" />

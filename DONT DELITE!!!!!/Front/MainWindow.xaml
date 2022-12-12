@@ -6,11 +6,14 @@
         mc:Ignorable="d"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Background="White"
         Title="Фоторедактор" Height="770" Width="1024">
-    <StackPanel Orientation="Vertical" Background="Transparent" >
+    <Window.Resources>
+        <Image x:Key="Pen" Source="/icons/pen.png"/>
+        <Image x:Key="Cursor" Source="/icons/cursor.png" />
+    </Window.Resources>
+    <StackPanel Orientation="Vertical" Background="{StaticResource MaterialDesignChipBackground}">
         <StackPanel Orientation="Horizontal" Background="White">
-            <Menu >
+            <Menu>
                 <MenuItem Name="menuItemFile"
                           Header="Файл" Height="29">
                     <MenuItem Name="menuItemOpen"
@@ -34,112 +37,145 @@
             </Menu>
 
         </StackPanel>
-        <Grid x:Name="root" Height="96" Background="White"  >
-
-            <TabControl Style="{DynamicResource MaterialDesignTabControlBase}" x:Name="MyTab" SelectionChanged="TabControl_SelectionChanged" Background="#131313">
-                <!--Эффекты-->
-                <TabItem Name="tabResize"  Header="Эффекты" Foreground="White">
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="Gray" Height="36" Content="Серый" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Gray_Click"/>
-                        <Button x:Name="Gaus" Height="36" Content="Размытие" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Gaus_Click"/>
-                        <TextBox x:Name="g" materialDesign:HintAssist.Hint="Размытость" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextWrapping="Wrap" Foreground="White"/>
-                        <Button x:Name="Fog" Height="36" Content="Fog" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Fog_Click"/>
-                        <Button x:Name="Flash" Height="36" Content="Flash" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Flash_Click"/>
-                        <Button x:Name="Frozen" Height="36" Content="Зима" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Frozen_Click"/>
-                        <Button x:Name="Arctic" Height="36" Content="Arctic" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Arctic_Click"/>
-                        <Button x:Name="Sepia" Height="36" Content="Сепия" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Sepia_Click"/>
-                        <Button x:Name="Kakao" Height="36" Content="Какао" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Kakao_Click"/>
-                        <Button x:Name="Cuji" Height="36" Content="Cuji" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Cuji_Click"/>
-                        <Button x:Name="Dramayic" Height="36" Content="Драматичный" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Dramatic_Click"/>
-                        <Button x:Name="Invert" Height="36" Content="Инвертирование" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Invert_Click" Width="145" />
-                    </StackPanel>
-                </TabItem>
-
-                <!--Коррекция-->
-                <TabItem Name="tabCorrection" Header="Коррекция" Foreground="Red">
-                    <StackPanel Background="Transparent" Orientation="Horizontal">
-                        <Button x:Name="Otraz" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Click="Otraz_Click">
-                            <Image Source="/icons/flipv.png"/>
-                        </Button>
-                        <Button x:Name="crop" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Click="crop_Click">
-                            <Image Source="/icons/crop.png" />
-                        </Button>
-                        <Button x:Name="Otraz1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Click="Otraz1_Click">
-                            <Image Source="/icons/flipg.png" />
-                        </Button>
-                        <Button x:Name="Rotate" Click="Rotate_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" >
-                            <Image Source="/icons/rotate.png" />
-                        </Button>
-                        <TextBox x:Name="angle" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Градусы" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" TextWrapping="Wrap" Foreground="Black"/>
-                    </StackPanel>
-                </TabItem>
-
-                <!--Фильтр-->
-                <TabItem Name="tabFilter" Header="Фильтр" Foreground="Red">
-                    <DockPanel Background="Transparent">
-                        <TextBlock Text="  Насыщенность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
-                        <Slider x:Name="SaturSlider" Margin="0,10,0,0" Value="100" Foreground="Cyan" Minimum="-100" Maximum="100" ValueChanged="SaturSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
-                        <TextBlock Text="  Прозрачность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
-                        <Slider x:Name="TransSlider" Margin="0,10,0,0" Foreground="Black" Minimum="-100" Maximum="0" ValueChanged="TransSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
-                        <TextBlock Text="  Якость  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
-                        <Slider x:Name="LightSlider" Margin="0,10,0,0" Foreground="Wheat" Minimum="-100" Maximum="100" ValueChanged="LightSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
-                        <TextBlock Text="  Контрастность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
-                        <Slider x:Name="ContrSlider" Margin="0,10,0,0" Value="100" Foreground="Gray" Minimum="0" Maximum="100" ValueChanged="ContrSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
-                        <ComboBox Name="RGB" Text="RGB Choice"  VerticalAlignment="Top" Grid.ColumnSpan="2" IsReadOnly="True" Width="100" Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
-                            <Slider x:Name="RedSlider" Margin="0,10,0,0" Foreground="Red" Maximum="255" Minimum="-255" ValueChanged="RedSlider_ValueChanged" HorizontalAlignment="Left" Width="140"/>
-                            <Slider x:Name="GreenSlider" Margin="0,10,0,0" Foreground="Green" Maximum="255" Minimum="-255" ValueChanged="GreenSlider_ValueChanged" HorizontalAlignment="Left" Width="140" Height="30"/>
-                            <Slider x:Name="BlueSlider" Margin="0,10,0,0" Foreground="Blue" Maximum="255" Minimum="-255" ValueChanged="BlueSlider_ValueChanged" HorizontalAlignment="Left" Width="140" Height="30"/>
-                        </ComboBox>
-                    </DockPanel>
-                </TabItem>
-
-                <!--Эффекты-->
-                <TabItem Name="tabEffects" Header="Виньетирование" Foreground="White">
-                    <DockPanel Background="Transparent">
-                        <Button x:Name="New" Click="New_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="36"/>
-
-                    </DockPanel>
-                </TabItem>
-
-                <!--Рисовать-->
-                <TabItem Name="tabDraw" Header="Рисование" Foreground="White">
-                    <DockPanel Background="Transparent">
-                        <Button Click="Pen_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="36">
-                            <Image Source="/icons/pen.png" />
-                        </Button>
-                        <xctk:ColorPicker Name="colorPicker" Width="140" HorizontalAlignment="Left" SelectedColorChanged="colorPicker_SelectedColorChanged" />
-                        <ComboBox Name="Pen" Text="Pen Choice"  VerticalAlignment="Top" Grid.ColumnSpan="2" IsReadOnly="True" Width="100" Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
-                            <Slider x:Name="Height_Slider" Margin="0,10,0,0" Foreground="Black" Maximum="20" Minimum="1" ValueChanged="Height_ValueChanged" HorizontalAlignment="Left" Width="140"/>
-                            <Slider x:Name="Width_Slider" Margin="0,10,0,0" Foreground="Black" Maximum="20" Minimum="1" ValueChanged="Width_ValueChanged" HorizontalAlignment="Left" Width="140"/>
-                        </ComboBox>
-                    </DockPanel>
-                </TabItem>
-            </TabControl>
-        </Grid>
-       
-        
-            <Border x:Name="BorderButton"
-                        CornerRadius="3.5"
+        <Border x:Name="BorderTabs"
+                        CornerRadius="13.5"
                         BorderBrush="{StaticResource PrimaryHueDarkBrush}"
-                        
-                        Padding="15 7 15 6"><!--Background="{StaticResource PrimaryHueLightBrush}"-->
-                <Border.Effect>
-                    <DropShadowEffect BlurRadius="2"
+                        Background="White"
+                        Padding="15 7 15 6">
+
+
+            <Grid x:Name="root" Height="96" Background="Transparent"  >
+
+                <TabControl  Style="{DynamicResource MaterialDesignTabControlBase}" x:Name="MyTab" SelectionChanged="TabControl_SelectionChanged" Background="#131313">
+                    <!--Эффекты-->
+                    <TabItem Name="tabResize"  Header="Эффекты" Foreground="White">
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="Gray" Height="36" Content="Серый" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Gray_Click"/>
+                            <Button x:Name="Gaus" Height="36" Content="Размытие" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Gaus_Click"/>
+                            <TextBox x:Name="g" materialDesign:HintAssist.Hint="Размытость" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextWrapping="Wrap" Foreground="Black"/>
+                            <Button x:Name="Fog" Height="36" Content="Fog" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Fog_Click"/>
+                            <Button x:Name="Flash" Height="36" Content="Flash" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Flash_Click"/>
+                            <Button x:Name="Frozen" Height="36" Content="Зима" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Frozen_Click"/>
+                            <Button x:Name="Arctic" Height="36" Content="Arctic" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Arctic_Click"/>
+                            <Button x:Name="Sepia" Height="36" Content="Сепия" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Sepia_Click"/>
+                            <Button x:Name="Kakao" Height="36" Content="Какао" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Kakao_Click"/>
+                            <Button x:Name="Cuji" Height="36" Content="Cuji" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Cuji_Click"/>
+                            <Button x:Name="Dramayic" Height="36" Content="Драматичный" HorizontalAlignment="Left" VerticalAlignment="Top"  Click="Dramatic_Click"/>
+                            <Button x:Name="Invert" Height="36" Content="Инвертирование" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Invert_Click" Width="145" />
+                        </StackPanel>
+                    </TabItem>
+
+                    <!--Коррекция-->
+                    <TabItem Name="tabCorrection" Header="Коррекция" Foreground="Red">
+                        <StackPanel Background="Transparent" Orientation="Horizontal">
+                            <Button x:Name="Otraz" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Click="Otraz_Click">
+                                <Image Source="/icons/flipv.png"/>
+                            </Button>
+                            <Button x:Name="crop" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Click="crop_Click">
+                                <Image Source="/icons/crop.png" />
+                            </Button>
+                            <Button x:Name="Otraz1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Click="Otraz1_Click">
+                                <Image Source="/icons/flipg.png" />
+                            </Button>
+                            <Button x:Name="Rotate" Click="Rotate_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" >
+                                <Image Source="/icons/rotate.png" />
+                            </Button>
+                            <TextBox x:Name="angle" HorizontalAlignment="Left" materialDesign:HintAssist.Hint="Градусы" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" TextWrapping="Wrap" Foreground="Black"/>
+                        </StackPanel>
+                    </TabItem>
+
+                    <!--Фильтр-->
+                    <TabItem Name="tabFilter" Header="Фильтр" Foreground="Red">
+                        <DockPanel Background="Transparent">
+                            <TextBlock Text="  Насыщенность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
+                            <Slider x:Name="SaturSlider" Margin="0,10,0,0" Value="100" Foreground="Cyan" Minimum="-100" Maximum="100" ValueChanged="SaturSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
+                            <TextBlock Text="  Прозрачность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
+                            <Slider x:Name="TransSlider" Margin="0,10,0,0" Foreground="Black" Minimum="-100" Maximum="0" ValueChanged="TransSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
+                            <TextBlock Text="  Якость  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
+                            <Slider x:Name="LightSlider" Margin="0,10,0,0" Foreground="Wheat" Minimum="-100" Maximum="100" ValueChanged="LightSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
+                            <TextBlock Text="  Контрастность  " Margin="0,10,0,0" HorizontalAlignment="Left" Foreground="Black" FontWeight="Bold"/>
+                            <Slider x:Name="ContrSlider" Margin="0,10,0,0" Value="100" Foreground="Gray" Minimum="0" Maximum="100" ValueChanged="ContrSlider_ValueChanged" HorizontalAlignment="Left" Width="130"/>
+                            <ComboBox Name="RGB" Text="RGB Choice"  VerticalAlignment="Top" Grid.ColumnSpan="2" IsReadOnly="True" Width="100" Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
+                                <Slider x:Name="RedSlider" Margin="0,10,0,0" Foreground="Red" Maximum="255" Minimum="-255" ValueChanged="RedSlider_ValueChanged" HorizontalAlignment="Left" Width="140"/>
+                                <Slider x:Name="GreenSlider" Margin="0,10,0,0" Foreground="Green" Maximum="255" Minimum="-255" ValueChanged="GreenSlider_ValueChanged" HorizontalAlignment="Left" Width="140" Height="30"/>
+                                <Slider x:Name="BlueSlider" Margin="0,10,0,0" Foreground="Blue" Maximum="255" Minimum="-255" ValueChanged="BlueSlider_ValueChanged" HorizontalAlignment="Left" Width="140" Height="30"/>
+                            </ComboBox>
+                        </DockPanel>
+                    </TabItem>
+                    
+                    <!--Эффекты-->
+                    <TabItem Name="tabVignette" Header="Виньетирование" Foreground="White">
+                        <DockPanel Background="Transparent">
+                            <Button x:Name="applyV" Click="applyV_Click" />
+                            <ComboBox x:Name="comboTechnique" Margin="5, 0, 5, 5" Width="120" SelectionChanged="comboTechnique_SelectionChanged">
+                                <ComboBoxItem>Circle</ComboBoxItem>
+                                <ComboBoxItem>Ellipse</ComboBoxItem>
+                                <ComboBoxItem>Diamond</ComboBoxItem>
+                                <ComboBoxItem>Square</ComboBoxItem>
+                                <ComboBoxItem>Rectangle</ComboBoxItem>
+                            </ComboBox>
+                            <Slider x:Name="sliderAngle" Width="140" Height="30" Margin="10 0 10 0" Minimum="0" Maximum="180" Value="45"
+                TickFrequency="18" TickPlacement="TopLeft" ValueChanged="sliderAngle_ValueChanged"/>
+                            <Slider x:Name="sliderPercent" Width="140" Height="30" Margin="10, 0, 10, 0" Minimum="50" Maximum="120" Value="80"
+                TickFrequency="7" TickPlacement="TopLeft" ValueChanged="sliderPercent_ValueChanged"/>
+                            <!--Width of the band in pixels-->
+                            <Slider x:Name="sliderBand" Width="140" Height="30" Margin="10, 0, 10, 0" Minimum="3" Maximum="200" Value="40"
+                TickFrequency="19.8" TickPlacement="TopLeft" ValueChanged="sliderBand_ValueChanged"/>
+                            
+                            <!--Number of steps in the blend-->
+                            <Slider x:Name="sliderSteps" Width="140" Height="30" Margin="10, 0, 10, 0" Minimum="4" Maximum="100" Value="40" TickFrequency="10" TickPlacement="TopLeft" ValueChanged="sliderSteps_ValueChanged"/>
+
+                            <Slider x:Name="sliderOriginX" Width="140" Height="30" Margin="10, 0, 10, 0" Minimum="-100" Maximum="100" Value="0" TickFrequency="20" TickPlacement="TopLeft" ValueChanged="sliderOriginX_ValueChanged"/>
+
+                            <Slider x:Name="sliderOriginY" Width="140" Height="30" Margin="10, 0, 10, 0" Minimum="-100" Maximum="100" Value="0" TickFrequency="20" TickPlacement="TopLeft" ValueChanged="sliderOriginY_ValueChanged"/>
+
+                            <xctk:ColorPicker Name="colorPickerV" materialDesign:ColorZoneAssist.Background="White" Width="140" HorizontalAlignment="Left" SelectedColorChanged="colorPickerV_SelectedColorChanged" />
+
+
+                        </DockPanel>
+                    </TabItem>
+
+                    <!--Рисовать-->
+                    <TabItem Name="tabDraw" Header="Рисование" Foreground="White">
+                        <DockPanel Background="Transparent">
+                            <!--<Button x:Name="PenButton" Click="Pen_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="36">
+                                <Image Source="/icons/pen.png" />-->
+
+                            <Button x:Name="PenButton" Click="Pen_Click">
+                                <Image Source="/icons/pen.png" />
+                            </Button>
+                            <!--</Button>-->
+                            <xctk:ColorPicker Name="colorPicker" materialDesign:ColorZoneAssist.Background="White" Width="140" HorizontalAlignment="Left" SelectedColorChanged="colorPicker_SelectedColorChanged" />
+                            <ComboBox Name="PenS" Text="Pen Choice"  VerticalAlignment="Top" Grid.ColumnSpan="2" IsReadOnly="True" Width="100" Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
+                                <Slider x:Name="Height_Slider" Margin="0,10,0,0" Foreground="Black" Maximum="20" Minimum="1" ValueChanged="Height_ValueChanged" HorizontalAlignment="Left" Width="140"/>
+                                <Slider x:Name="Width_Slider" Margin="0,10,0,0" Foreground="Black" Maximum="20" Minimum="1" ValueChanged="Width_ValueChanged" HorizontalAlignment="Left" Width="140"/>
+                            </ComboBox>
+                        </DockPanel>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </Border>
+
+        <Border x:Name="BorderButton"
+                        CornerRadius="13.5"
+                        BorderBrush="{StaticResource PrimaryHueDarkBrush}"
+                        Padding="15 7 15 6">
+            <!--Background="{StaticResource MaterialDesignChipBackground}"-->
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="2"
                                               ShadowDepth="1"
                                               Direction="270"
                                               Color="Black"
                                               Opacity="0.8" />
-                </Border.Effect>
-                <Grid Margin="18,0,18,18" Height="596" Background="Transparent">
+            </Border.Effect>
+            <Grid Margin="18,0,18,18" Height="596" Background="Transparent">
                 <Canvas Name="MainCanvas" Margin="0,0,0,0" MouseLeftButtonUp="SavePicture" Background="Transparent">
-
                     <Image x:Name="imgPhoto" Margin="0,0,0,0"/>
-
                     <InkCanvas x:Name="InkCanvas" Visibility="Hidden" UseCustomCursor="True" Cursor="Cross" Height="575" Width="978" EditingMode="Ink" ClipToBounds="True" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top"  />
                 </Canvas>
             </Grid>
-            </Border>
-        
-        
+        </Border>
+
+
     </StackPanel>
 </Window>

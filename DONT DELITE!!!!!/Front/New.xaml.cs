@@ -29,14 +29,15 @@ namespace DONT_DELITE_____.Front
    
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
+            Start s = new Start();
+            s.CloseW();
             height = int.Parse(Height.Text);
             width = int.Parse(Width.Text);
             MainWindow mainWindow = new MainWindow();
             mainWindow.NewLayer(width, height);
             mainWindow.Show();
+            
             Close();
-            Start s = new Start();
-            s.CloseW();
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

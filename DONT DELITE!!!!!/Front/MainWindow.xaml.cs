@@ -34,9 +34,12 @@ namespace DONT_DELITE_____
         public List<Bitmap> bitmapList = new List<Bitmap>();
         public Bitmap currentPicture;
         public Bitmap effectsPicture;//костыль для криво работающих эффектов
-        private int currentBitmap = 0;
+        public int currentBitmap = 0;
         public Bitmap MWImg;
         private bool PenVisible = false; //кнопочка рисовать
+        VignetteEffect vignette;
+        VignetteShape shape;
+        Color colour;
 
         public MainWindow()
         {
@@ -521,6 +524,18 @@ namespace DONT_DELITE_____
         {
             InkCanvas.DefaultDrawingAttributes.Color = (Color)colorPicker.SelectedColor;
         }
+        void colorPickerV_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            colour = (Color)colorPickerV.SelectedColor;
+               
+
+                if (vignette != null)
+                {
+                    vignette.BorderColour = colour;
+                    vignette.ApplyEffect();
+                }
+            
+        }
         private void Width_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             try
@@ -563,10 +578,12 @@ namespace DONT_DELITE_____
             {
                 InkCanvas.Visibility = Visibility.Visible;
                 PenVisible = true;
+                PenButton.Content = Resources["Cursor"];
             }
             else {
                 InkCanvas.Visibility = Visibility.Hidden;
                 PenVisible = false;
+                PenButton.Content = Resources["Pen"];
             }
         }
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -575,6 +592,156 @@ namespace DONT_DELITE_____
             {
                 effectsPicture = bitmapList[currentBitmap];
                 addPicture(effectsPicture);
+            }
+            if (tabVignette.IsSelected)
+            {
+                
+            }
+        }
+        //private void RedSliderVignette_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        //{
+        //    try
+        //    {
+        //        if (bitmapList.Count > 0)
+        //        {
+        //            Сorrection cor = new Сorrection();
+        //            addPicture(cor.PaintVignette(this, bitmapList[currentBitmap]));
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Откройте картинку");
+        //        }
+        //    }
+        //    catch (Exception except)
+        //    {
+        //        MessageBox.Show(except.Message);
+        //    }
+        //}
+        //private void GreenSliderVignette_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        //{
+        //    try
+        //    {
+        //        if (bitmapList.Count > 0)
+        //        {
+        //            Сorrection cor = new Сorrection();
+        //            addPicture(cor.PaintVignette(this, bitmapList[currentBitmap]));
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Откройте картинку");
+        //        }
+        //    }
+        //    catch (Exception except)
+        //    {
+        //        MessageBox.Show(except.Message);
+        //    }
+        //}
+        //private void BlueSliderVignette_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        //{
+        //    try
+        //    {
+        //        if (bitmapList.Count > 0)
+        //        {
+        //            Сorrection cor = new Сorrection();
+        //            addPicture(cor.PaintVignette(this, bitmapList[currentBitmap]));
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Откройте картинку");
+        //        }
+        //    }
+        //    catch (Exception except)
+        //    {
+        //        MessageBox.Show(except.Message);
+        //    }
+        //}
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            NewLayer(400, 300);
+        }
+        private void comboTechnique_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            sliderAngle.IsEnabled = true;
+            if (comboTechnique.SelectedIndex == 0)
+            {
+                shape = VignetteShape.Circle;
+                sliderAngle.IsEnabled = false;
+            }
+            else if (comboTechnique.SelectedIndex == 1)
+            {
+                shape = VignetteShape.Ellipse;
+            }
+            else if (comboTechnique.SelectedIndex == 2)
+            {
+                shape = VignetteShape.Diamond;
+            }
+            else if (comboTechnique.SelectedIndex == 3)
+            {
+                shape = VignetteShape.Square;
+            }
+            else //if(comboTechnique.SelectedIndex == 4)
+            {
+                shape = VignetteShape.Rectangle;
+            }
+
+            if (vignette != null)
+            {
+                vignette.Shape = shape;
+                vignette.ApplyEffect();
+            }
+        }
+
+        private void sliderAngle_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (vignette != null)
+            {
+                vignette.Angle = sliderAngle.Value;
+                vignette.ApplyEffect();
+            }
+        }
+
+        private void sliderPercent_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (vignette != null)
+            {
+                vignette.Coverage = sliderPercent.Value;
+                vignette.ApplyEffect();
+            }
+        }
+
+        private void sliderBand_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (vignette != null)
+            {
+                vignette.BandPixels = Convert.ToInt32(sliderBand.Value);
+                vignette.ApplyEffect();
+            }
+        }
+
+        private void sliderOriginX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (vignette != null)
+            {
+                vignette.Xcentre = Convert.ToInt32(sliderOriginX.Value);
+                vignette.ApplyEffect();
+            }
+        }
+
+        private void sliderOriginY_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (vignette != null)
+            {
+                vignette.Ycentre = Convert.ToInt32(sliderOriginY.Value);
+                vignette.ApplyEffect();
+            }
+        }
+
+        private void sliderSteps_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (vignette != null)
+            {
+                vignette.NumberSteps = Convert.ToInt32(sliderSteps.Value);
+                vignette.ApplyEffect();
             }
         }
         #endregion
@@ -718,8 +885,6 @@ namespace DONT_DELITE_____
             Bitmap bitmap = new Bitmap(stream);
             return bitmap;
         }
-
-
         public void NewLayer(int PixelWidth, int PixelHeight)
         {
             RenderTargetBitmap bitmap = new RenderTargetBitmap(PixelWidth, PixelHeight, 96, 96, PixelFormats.Pbgra32);
@@ -729,11 +894,14 @@ namespace DONT_DELITE_____
 
         }
 
+
         #endregion
 
-        private void New_Click(object sender, RoutedEventArgs e)
+        private void applyV_Click(object sender, RoutedEventArgs e)
         {
-            NewLayer(400, 300);
+            Сorrection cor = new Сorrection();
+            addPicture(cor.bnOpen(this, currentPicture));
         }
+        
     }
 }

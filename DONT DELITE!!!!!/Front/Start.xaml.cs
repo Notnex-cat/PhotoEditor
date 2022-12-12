@@ -40,7 +40,8 @@ namespace DONT_DELITE_____
         }
         public void CloseW()
         {
-            Close();
+            Console.WriteLine("444545");
+            this.Close();
         }
     }
 }

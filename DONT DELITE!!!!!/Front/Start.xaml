@@ -7,9 +7,13 @@
         mc:Ignorable="d"
         Title="Start" Height="450" Width="800">
     <Grid>
-        <Button x:Name="Open"  Content="Open" HorizontalAlignment="Left" Margin="375,217,0,0" VerticalAlignment="Top" Click="Open_Click"/>
-        <Button x:Name="New" Content="New" HorizontalAlignment="Left" Margin="37,217,0,0" VerticalAlignment="Top" Click="New_Click"/>
-        
-
+        <Button x:Name="Open" HorizontalAlignment="Left" Margin="481,129,0,0" VerticalAlignment="Top" Click="Open_Click" Height="142" Width="130">
+            <Image Source="/icons/open.png" />
+        </Button>
+        <Button x:Name="New" HorizontalAlignment="Left" Margin="188,129,0,0" VerticalAlignment="Top" Click="New_Click" Height="142" Width="130">
+            <Image Source="/icons/new.png" />
+        </Button>
+        <TextBlock HorizontalAlignment="Left" Margin="229,295,0,0" TextWrapping="Wrap" Text="Новый" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="516,295,0,0" TextWrapping="Wrap" Text="Открыть" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
     </Grid>
 </Window>
